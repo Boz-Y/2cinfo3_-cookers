@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { routes } from 'src/app/core/helpers/routes/routes';
 
@@ -9,57 +9,53 @@ declare const gapi: any; // Declare the `gapi` object
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  ngOnInit(): void {
+    this.loadGoogleSignInClient();
+  }
   public routes = routes;
-  public Toggledata = true;
+  public Toggledata = false;
 
-  constructor(public router: Router) {
+  constructor(public router:Router){
     
   }
-
-  path() {
-    this.router.navigate([routes.dashboard]);
+  path(){
+    this.router.navigate([routes.login])
   }
-
   iconLogle() {
     this.Toggledata = !this.Toggledata;
+   
+  
   }
 
-  // Load the `gapi` library asynchronously
-  loadGapi() {
-    return new Promise<void>((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = 'https://apis.google.com/js/platform.js';
+  loadGoogleSignInClient(): void {
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
 
-      script.onload = () => {
-        gapi.load('auth2', () => {
-          resolve();
-        });
-      };
+    script.onload = () => {
+      // The Google Sign-In client script has been loaded
+      this.initializeGoogleSignIn();
+    };
+  }
 
-      script.onerror = () => {
-        reject(new Error('Failed to load Google API client library.'));
-      };
-
-      document.head.appendChild(script);
+  initializeGoogleSignIn(): void {
+    // Initialize the Google Sign-In client
+    gapi.load('auth2', () => {
+      gapi.auth2.init({
+        client_id: '781943891006-ctdghgsrl5rq7g8eumkrcrjfnoq8pq0t.apps.googleusercontent.com'
+      }).then(() => {
+        console.log('Google Sign-In client initialized.');
+        // You can now use the Google Sign-In client methods
+      }).catch((error: any) => {
+        console.error('Error initializing Google Sign-In client:', error);
+      });
     });
   }
 
-  // Usage example
-  async initializeAuth() {
-    await this.loadGapi(); // Wait for the library to load
+  // Other component methods and code...
 
-    // Initialize the `gapi.auth2` module
-    await gapi.auth2.init({
-      client_id: '781943891006-ctdghgsrl5rq7g8eumkrcrjfnoq8pq0t.apps.googleusercontent.com',
-    });
-
-    // Now you can use the `gapi.auth2` module
-    const authInstance = gapi.auth2.getAuthInstance();
-    // ...
-  }
-
-  ngOnInit() {
-    this.initializeAuth();
-  }
 }
+
