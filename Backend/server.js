@@ -10,6 +10,8 @@ dotenvConfig();
 import { notFoundError, errorHandler } from './Middelware/error-handler.js';
 
 import UsersRoutes from './routes/user.js';
+import reclamation_route from './routes/reclamation.js';
+import reclamation_type_route from './routes/type_reclamation.js';
 import PlatsRoutes from './routes/Plats.js'; //importer le router du fichier 
 import IngredientsRoutes from './routes/Ingredients.js'; 
 import SpecialitesRoutes from './routes/Specialite.js'; 
@@ -41,7 +43,8 @@ mongoose
   app.use(express.urlencoded({ extended: true }));
   app.use('/img', express.static('public/images'));
 
- 
+  app.use('/reclamation', reclamation_route);
+  app.use('/reclamation_type', reclamation_type_route);
   app.use('/plats', PlatsRoutes);
   app.use('/ingredients', IngredientsRoutes);
   app.use('/specialites', SpecialitesRoutes);
