@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from "express-validator";
-import multer from "../Middelware/multer-config.js";
+// import multer from "../middlewares/multer-config.js";
 import { addOnceIngredients, getAll, DeleteIngredients, getIngredientsById, putOnce } from '../controllers/Ingredients.js';
 
 

@@ -15,7 +15,7 @@ import validator from "email-validator"
 import fs from 'fs'
 import handlebars from 'handlebars'
 
-
+//SIGNUP USER
 const registerUser = asynHandler( async ( req , res )=> {
     const {  firstname ,
       lastname , 
@@ -91,12 +91,12 @@ const registerUser = asynHandler( async ( req , res )=> {
   
   })
 
-
+//Vérification de mail
 const  verifyEmail = asynHandler( async (req,res) => {
    const { id , otp } = req.body
     if ( !id || !otp.trim()){
         res.status(400)
-        throw new Error ("Invalid reequest")
+        throw new Error ("Invalid request")
     }
     if (!isValidObjectId(id)) {
 
@@ -116,12 +116,12 @@ const  verifyEmail = asynHandler( async (req,res) => {
 
     if (!token) {
         res.status(404)
-        throw  new Error(" Invalid Token !! ")
+        throw  new Error(" Invalid user !! ")
     }
     const isMatch = await bcrypt.compareSync(otp,token.vtoken)
     if (!isMatch) {
         res.status(404)
-        throw  new Error(" Invalid Token !! ") 
+        throw  new Error(" Invalid Token !!! ") 
     }
     user.verify = true;
     await verficationToken.findByIdAndDelete(token._id)
@@ -136,6 +136,7 @@ const  verifyEmail = asynHandler( async (req,res) => {
 
 })
 
+//LOGIN
 const logIn = asynHandler( async (req,res)=>{
         const  { mail , password } = req.body
         
@@ -163,39 +164,7 @@ const logIn = asynHandler( async (req,res)=>{
 })
 
 
-// const forgetPass = asynHandler(async (req,res)=>{
-//     const  { mail } = req.body
-// if (!mail ){
-//     res.status(404).json({message:'Invalid email'})
-//   }
-//     const user = await Users.findOne({ mail: mail })
-//     console.log(user)
-//     if(!user){
-//         res.status(404).json({message:"Invalid User"})
-//     }
-//     const otp = generatorOTP()
-//     console.log(otp)
-//     await verficationToken.create({
-//         owner : user._id,
-//         vtoken: otp
-//     })
-//     console.log("mail")
-//     fs.readFile('backend\\utils\\content.html', {encoding: 'utf-8'}, function (err, html) {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//             var template = handlebars.compile(html);
-//             var replacements = {
-//                 name: user.lastname+" "+user.firstname,
-//                 action_url: `http://localhost:3000/reset-password?id=${user._id}&token=${otp}`,
-//             };
-//             var htmlToSend = template(replacements);
-//     mailTransport().sendMail({
-//         from:"devtestmailer101@gmail.com",
-//         to: user.mail,
-//         subject: "Rest Password Mail",
-//         html: htmlToSend
-//     })}})
+//Forget Password
 const forgetPass = asynHandler(async (req, res) => {
     const { mail } = req.body;
   
@@ -218,25 +187,18 @@ const forgetPass = asynHandler(async (req, res) => {
   
     try {
         
-        const html = fs.readFileSync('backend\\utils\\content.html', 'utf-8');
+        const html = fs.readFileSync('../Backend/utils/content.html', 'utf-8');
         const template = handlebars.compile(html);
       
-        // const transporter = nodemailer.createTransport({
-        //   host: 'smtp.gmail.com',
-        //   port: 587,
-        //   secure: false,
-        //   auth: {
-        //     user: 'bozyacine@gmail.com',
-        //     pass: '94341067<3',
-        //   },
-        // });
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-              user: 'bozyacine@gmail.com',
-              pass: '94341067<3',
-            },
-          });
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure: false,
+          auth: {
+            user: 'Bozyacine1@gmail.com',
+            pass: process.env.pass,
+          },
+        });
       
         const replacements = {
           name: `${user.lastname} ${user.firstname}`,
@@ -264,48 +226,64 @@ const forgetPass = asynHandler(async (req, res) => {
       }
       
   });
-  
-const reset = asynHandler(async ( req,res)=>{
-    const { password } =req.body
-    const user = await Users.findById(req.user._id)
-    if (!user) {
-        res.status(404).json({"message":"User Not Found !!"})
-        throw new Error(" User Not Found !!")
-    }
-    const salt = await bcrypt.genSalt(10)
-    const headPassword = await bcrypt.hash(password,salt)
-
-    user.password = headPassword
-    await verficationToken.deleteOne({ owner : user._id })
-    await user.save()
-    fs.readFile('backend/utils/content.html', {encoding: 'utf-8'}, function (err, html) {
+  //Reset Password
+  const reset = asynHandler(async (req, res) => {
+    try {
+      const { password } = req.body;
+      const user = await Users.findById(req.user._id);
+      if (!user) {
+        res.status(404).json({ "message": "User Not Found !!" });
+        throw new Error("User Not Found !!");
+      }
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+    
+      user.password = hashedPassword;
+      await verficationToken.deleteOne({ owner: user._id });
+      await user.save();
+      fs.readFile('../Backend/utils/content.html', { encoding: 'utf-8' }, function (err, html) {
         if (err) {
           console.log(err);
         } else {
-            var template = handlebars.compile(html);
-            const transporter = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 587,
-                secure: false,
-                auth: {
-                  user: 'bozyacine@gmail.com',
-                  pass: '94341067<3'
-                }
-              });
-            var replacements = {
-                action_url: `http://localhost:3000/login`,
-            };
-            var htmlToSend = template(replacements);
-            mailTransport().sendMail({
-                from: 'devtestmailer101@gmail.com',
-                to: user.mail,
-                subject: 'Password changed',
-                html: htmlToSend,
-              })}})
-     res.json(" Password Updated ")
-
-
-})
+          const template = handlebars.compile(html);
+    
+          const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            auth: {
+              user: 'Bozyacine1@gmail.com',
+              pass: process.env.pass,
+            },
+          });
+    
+          var replacements = {
+            action_url: `http://localhost:3000/login`,
+          };
+          var htmlToSend = template(replacements);
+    
+          transporter.sendMail({
+            from: 'devtestmailer101@gmail.com',
+            to: user.mail,
+            subject: 'Password changed',
+            html: htmlToSend,
+          }, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+        }
+      });
+      res.json("Password Updated");
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ "message": "Internal Server Error" });
+    }
+  });
+  
+  
 
 //admin
 const bloque = asynHandler( async(req,res)  =>{
@@ -345,6 +323,7 @@ const bloque = asynHandler( async(req,res)  =>{
     return res.json(user)
  })
 
+ //Update USER
 const updateUser = asynHandler(async(req,res)=>{
     const { mail,  firstname , lastname ,phone ,status, password, confirmPassword} = req.body 
     const user = await Users.findById( req.params.id  )
@@ -389,19 +368,23 @@ const updateUser = asynHandler(async(req,res)=>{
     })
         
 })
-const findUserById = asynHandler(async(req,res)=>{
-    const { id } = req.params
-    const user = await Users.findById( id ).select('-password')
-    if (!user) {
-        res.Error(404)
-        throw new Error(" User Not Found !!")
-    }
-    res.json(user)
 
-})
+//Find USER
+const findUserById = asynHandler(async (req, res) => {
+  const { id } = req.params;
+  const user = await Users.findById(id).select('-password');
+  if (!user) {
+    res.status(404);
+    throw new Error('User Not Found!!');
+  }
+  res.json(user);
+});
+
+
+//DELETE USER
 export function deleteOnce(req, res) {
     Users
-    .findOneAndRemove({ "firstname": req.params.firstname })
+    .findOneAndRemove({ "mail": req.params.mail })
     .then(doc => {
         res.status(200).json(doc);
     })

@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from "express-validator";
-import { addOncePlat, getAll, DeletePlat, getPlatById, putOnce, getPlatsBySpeciality } from '../Controllers/Plats.js';
+import { addOncePlat, getAll, DeletePlat, getPlatById, putOnce, getPlatsBySpeciality } from '../controllers/Plats.js';
 
 
 const router = express.Router();
@@ -13,7 +13,6 @@ router.route('/AddPlats')
 .post(
     addOncePlat);
 
-    
 
 router.route('/:id')
 .get(getPlatById)
@@ -26,7 +25,8 @@ router.route('/:id')
 router.route('/speicalite/:specialityId')
 .get(getPlatsBySpeciality)
 
-
+// router.route('/ingredient/:ingredientId')
+// .get(getPlatsByIngredients)
 
 
 export default router;

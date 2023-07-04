@@ -16,6 +16,7 @@ import SpecialitesRoutes from './routes/Specialite.js';
 import EventRoutes from './routes/evenement_route.js';
 import ParticipantRoutes from './routes/participant_route.js';
 import VoteRoutes from './routes/vote_route.js';
+import BesoinsRoutes from './routes/BesoinPlatsIngredients.js'; 
 
 const app = express(); // creer l'instance de express a utiliser
 const hostname = '127.0.0.1'; //l'@ du serveur
@@ -47,6 +48,7 @@ mongoose
   app.use('/event', EventRoutes);
   app.use('/event/participant', ParticipantRoutes);
   app.use('/event/vote', VoteRoutes);
+  app.use('/besoins', BesoinsRoutes);
   app.use('/user', UsersRoutes);
   app.post('/user/api', (req,res) => {
     console.log(req.body);

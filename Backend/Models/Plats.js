@@ -23,7 +23,15 @@ var platSchema = new Schema(
         specialite: { 
             type: Schema.Types.ObjectId,
             ref: 'Specialite' 
-        }
+        },
+        // withIngredients: [{ 
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'BesoinPlatsIngredients' 
+        // }],
+        recette:  [
+            { type: Schema.Types.ObjectId, 
+              ref: 'Recettes' }
+        ]
 
     },
     {

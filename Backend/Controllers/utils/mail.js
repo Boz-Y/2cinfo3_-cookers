@@ -9,16 +9,18 @@ const generatorOTP = () => {
 
 const mailTransport = () =>
   nodemailer.createTransport({
-    service: process.env.service,
-    auth: {
-      user: process.env.user,
-      pass: process.env.pass,
-    },
+    service: 'smtp.gmail.com',
+    port: 587,
+          secure: false,
+          auth: {
+            user: 'Bozyacine1@gmail.com',
+            pass: process.env.pass,
+          },
   });
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.jwt_Secret, {
-    expiresIn: "1d",
+    expiresIn: "365d",
   });
 };
 // const generateToken = (userId) => {

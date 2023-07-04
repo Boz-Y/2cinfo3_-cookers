@@ -60,4 +60,3 @@ const renderDataIntoTemplate = (data) => {
 
     return compiledTemplate(data)
 }
-

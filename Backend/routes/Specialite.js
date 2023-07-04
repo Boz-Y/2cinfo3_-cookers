@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from "express-validator";
-import { addOnceSpeciality, getAll, DeleteSpeciality, getSpecialityById, putOnce,  } from '../Controllers/Specialite.js';
+import { addOnceSpeciality, getAll, DeleteSpeciality, getSpecialityById, putOnce,  } from '../controllers/Specialite.js';
 
 
 const router = express.Router();
