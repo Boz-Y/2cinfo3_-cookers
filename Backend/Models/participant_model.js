@@ -5,27 +5,26 @@ const ParticipantSchema = new Schema(
     {
         etat: {
             type: Number,
-            required: true,
-            default: 0,
+            default: 1,
         },
         id_participant: {
             type: Schema.Types.ObjectId, 
-            ref:"utilisateur",
+            ref:"Users",
             required: true
         },
         id_evenement: {
             type: Schema.Types.ObjectId,
-            ref:"evenements",
+            ref:"Evenement",
             required: true
         },
         id_plat: {
             type: Schema.Types.ObjectId,
-            ref:"plat",
+            ref:"Plats",
             required: true
         },
         votes: {
             type:[Schema.Types.ObjectId],
-            ref:"vote"
+            ref:"Vote"
         }
     },
     {

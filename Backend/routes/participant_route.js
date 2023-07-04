@@ -1,8 +1,7 @@
 import express from 'express';
 import { body } from "express-validator";
-import { getParticipantEvent,participerEvent,updateParticipantEvent,approuveParticipant } from '../Controller/participant_controller.js';
+import { getParticipantEvent,participerEvent,updateParticipantEvent,approuveParticipant } from '../Controllers/participant_controller.js';
 
-import multer from "../middlewares/multer-config.js";
   
 const router = express.Router();
 

@@ -8,19 +8,18 @@ const MIME_TYPES = {
   "image/png": "png",
 };
 
-export default function (image, size) {
+export default function (image) {
   return multer({
     storage: diskStorage({
       destination: (req, file, callback) => {
         const __dirname = dirname(fileURLToPath(import.meta.url));
-        callback(null, join(__dirname, "../public/images"));
+        callback(null, join(__dirname, "../public/images/evenement"));
       },
       filename: (req, file, callback) => {
         const name = file.originalname.split(" ").join("_");
         const extension = MIME_TYPES[file.mimetype];
-        callback(null, name + Date.now() + "." + extension);
+        callback(null,Date.now() + "." + extension);
       },
     }),
-    limits: size,
-  }).single(image);
+  }).array(image);
 }

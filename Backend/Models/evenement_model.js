@@ -12,7 +12,7 @@ const EventSchema = new Schema(
       required: true,
     },
 
-    image: {
+    images: {
       type: [String],
     },
 
@@ -46,13 +46,13 @@ const EventSchema = new Schema(
     },
     user_createur: {
       type: Schema.Types.ObjectId,
-      ref: "utilisateur",
+      ref: "Users",
       required: true,
     },
     specialites: 
       {
         type: [Schema.Types.ObjectId],
-        ref: "specialites",
+        ref: "Specialite",
         required: true,
       },
     pourcentage: {

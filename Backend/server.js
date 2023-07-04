@@ -9,7 +9,6 @@ dotenvConfig();
 //connect database
 import { notFoundError, errorHandler } from './Middelware/error-handler.js';
 
-
 import UsersRoutes from './routes/user.js';
 import PlatsRoutes from './routes/Plats.js'; //importer le router du fichier 
 import IngredientsRoutes from './routes/Ingredients.js'; 
@@ -41,15 +40,18 @@ mongoose
   app.use(express.urlencoded({ extended: true }));
   app.use('/img', express.static('public/images'));
 
-
-
-app.use('/user', UsersRoutes);
-app.use('/plats', PlatsRoutes);
-app.use('/ingredients', IngredientsRoutes);
-app.use('/specialites', SpecialitesRoutes);
-app.use('/event', EventRoutes);
-app.use('/event/participant', ParticipantRoutes);
-app.use('/event/vote', VoteRoutes);
+ 
+  app.use('/plats', PlatsRoutes);
+  app.use('/ingredients', IngredientsRoutes);
+  app.use('/specialites', SpecialitesRoutes);
+  app.use('/event', EventRoutes);
+  app.use('/event/participant', ParticipantRoutes);
+  app.use('/event/vote', VoteRoutes);
+  app.use('/user', UsersRoutes);
+  app.post('/user/api', (req,res) => {
+    console.log(req.body);
+    res.redirect('http://localhost:4200/userpages/dashboard')
+    });
 
   app.use(notFoundError);
   app.use(errorHandler);

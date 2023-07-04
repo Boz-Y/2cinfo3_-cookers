@@ -22,6 +22,8 @@
     "express-validator": "^7.0.1",
     "fs": "^0.0.1-security",
     "handlebars": "^4.7.7",
+    "html-to-pdfmake": "^2.4.22",
+    "jsdom": "^22.1.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.4",
     "morgan": "^1.10.0",
@@ -29,6 +31,8 @@
     "nodemailer": "^6.9.3",
     "nodemon": "^2.0.22",
     "otp-generator": "^4.0.1",
+    "pdfmake": "^0.2.7",
+    "qrcode": "^1.5.3",
     "token": "^0.1.0"
   }
 }
