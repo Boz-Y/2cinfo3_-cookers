@@ -10,7 +10,6 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ListMapComponent } from 'src/app/featuremodule/listings/list-map/list-map.component';
 import { GMapModule } from 'primeng/gmap';
 import { LightboxModule } from 'ngx-lightbox/lightbox.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
@@ -22,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, ListMapComponent],
+  declarations: [HeaderComponent, FooterComponent],
   imports: [
     CommonModule,
     CarouselModule,
@@ -53,7 +52,6 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     MatCardModule,
     NgApexchartsModule,
     GMapModule,
-    ListMapComponent,
     MatCardModule,
     MatSortModule,
     MatSelectModule,

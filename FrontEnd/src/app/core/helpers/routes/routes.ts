@@ -31,24 +31,7 @@ export class routes {
   public static get userpages(): string {
     return this.baseUrl + '/userpages';
   }
-  public static get blogdetails(): string {
-    return this.baseUrl + '/blog/blog-details';
-  }
-  public static get bloggrid(): string {
-    return this.baseUrl + '/blog/blog-grid';
-  }
-  public static get bloggridsidebar(): string {
-    return this.baseUrl + '/blog/blog-grid-sidebar';
-  }
-  public static get bloglist(): string {
-    return this.baseUrl + '/blog/blog-list';
-  }
-  public static get bloglistsidebar(): string {
-    return this.baseUrl + '/blog/blog-list-sidebar';
-  }
-  public static get home1(): string {
-    return this.baseUrl + '/home-one';
-  }
+ 
   public static get home2(): string {
     return this.baseUrl + '/home-two';
   }

@@ -20,15 +20,13 @@ const registerUser = asynHandler( async ( req , res )=> {
     const {  firstname ,
       lastname , 
       password , 
-      confirmPassword , 
       phone , 
       mail  ,
-      status 
   
     } = req.body
   
   
-    if (!firstname || !lastname ||  !validator.validate(mail) ||  !password || !confirmPassword ||  !status  || !mail || !phone ){
+    if (!firstname || !lastname ||  !validator.validate(mail) ||  !password  || !mail || !phone ){
             res.status(400)
             throw new Error('Please add  all fields')
     }
@@ -52,10 +50,9 @@ const registerUser = asynHandler( async ( req , res )=> {
       firstname ,
       lastname , 
       password: headPassword , 
-      confirmPassword , 
       phone , 
       mail  ,
-      status 
+      Role,
         
     })
     
@@ -78,9 +75,8 @@ const registerUser = asynHandler( async ( req , res )=> {
             lastname: user.lastname,
             phone: user.phone,
             mail: user.mail,
-            status: user.status,
-            confirmPassword: user.confirmPassword,
             password: user.password,
+            
             
         })
     }
@@ -151,8 +147,6 @@ const logIn = asynHandler( async (req,res)=>{
                 lastname: user.lastname,
                 phone: user.phone,
                 mail: user.mail,
-                status: user.status,
-                confirmPassword: user.confirmPassword,
                 password: user.password, 
                 token: generateToken(user._id)
             })
@@ -204,6 +198,7 @@ const forgetPass = asynHandler(async (req, res) => {
           name: `${user.lastname} ${user.firstname}`,
           action_url: `http://localhost:3000/reset-password?id=${user._id}&token=${otp}`,
         };
+
         const htmlToSend = template(replacements);
       
         transporter.sendMail({

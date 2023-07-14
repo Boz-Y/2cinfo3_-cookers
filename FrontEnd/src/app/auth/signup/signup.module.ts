@@ -6,6 +6,7 @@ import { SignupComponent } from './signup.component';
 
 
 
+
 @NgModule({
   declarations: [
     SignupComponent
@@ -14,6 +15,6 @@ import { SignupComponent } from './signup.component';
     CommonModule,
     SignupRoutingModule,
     
-  ]
+  ],
 })
 export class SignupModule { }

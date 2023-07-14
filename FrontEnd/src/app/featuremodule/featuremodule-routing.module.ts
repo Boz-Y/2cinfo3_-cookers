@@ -10,7 +10,7 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'home-one',
+        redirectTo: 'home',
       },
       {
         path: '',
@@ -36,11 +36,6 @@ const routes: Routes = [
         path: 'userpages',
         loadChildren: () =>
           import('./userpages/userpages.module').then((m) => m.UserpagesModule),
-      },
-      {
-        path: 'blog',
-        loadChildren: () =>
-          import('./blog/blog.module').then((m) => m.BlogModule),
       },
       {
         path: 'contact',

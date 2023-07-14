@@ -50,10 +50,6 @@ const routes: Routes = [
         (m) => m.TermsConditionModule
       ),
   },
-  {
-    path: 'faq',
-    loadChildren: () => import('./faq/faq.module').then((m) => m.FaqModule),
-  },
 
   ] },
   

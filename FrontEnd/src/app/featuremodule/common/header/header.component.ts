@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   base: string = '';
   page: string = '';
   last: string = '';
+  public scrollPosition = 0;
 
   public nav : boolean = false;
   header: Array<any> = [];
@@ -32,7 +33,7 @@ constructor(private data : DataService,private router: Router, private common: C
   });
   this.getroutes(this.router);
 }
-ngOnInit(): void {}
+
 private getroutes(route: any): void {
   let splitVal = route.url.split('/');
   this.base = splitVal[1];
@@ -57,6 +58,11 @@ public toggleSidebar(): void {
 }
 public hideSidebar(): void {
   this.sidebarService.closeSidebar();
+}
+ngOnInit(): void {
+  window.addEventListener('scroll', () => {
+    this.scrollPosition = window.scrollY;
+  });
 }
 
 }

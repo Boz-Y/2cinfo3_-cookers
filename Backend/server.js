@@ -10,6 +10,7 @@ dotenvConfig();
 import { notFoundError, errorHandler } from './Middelware/error-handler.js';
 
 import UsersRoutes from './routes/user.js';
+import RoleRoutes from './routes/Role.js';
 import reclamation_route from './routes/reclamation.js';
 import reclamation_type_route from './routes/type_reclamation.js';
 import PlatsRoutes from './routes/Plats.js'; //importer le router du fichier 
@@ -53,10 +54,15 @@ mongoose
   app.use('/event/vote', VoteRoutes);
   app.use('/besoins', BesoinsRoutes);
   app.use('/user', UsersRoutes);
+  app.use('/role', RoleRoutes);
   app.post('/user/api', (req,res) => {
     console.log(req.body);
     res.redirect('http://localhost:4200/userpages/dashboard')
     });
+    app.post('/user/reset', (req,res) => {
+      console.log(req.body);
+      res.redirect('http://localhost:4200/auth/forgot-password')
+      });
 
   app.use(notFoundError);
   app.use(errorHandler);

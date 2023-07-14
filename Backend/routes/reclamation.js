@@ -1,7 +1,6 @@
 
 import express from 'express';
-import { body } from "express-validator";
-import {add_reclamation,getOnce_byId ,getAll,getReclamationsByUserId,getReclamationsByType,deleteReclIfStatusIsOne,updateReclamation} from '../Controller/reclamation.js';
+import {add_reclamation,getOnce_byId ,getAll,getReclamationsByUserId,getReclamationsByType,deleteReclIfStatusIsOne,updateReclamation} from '../Controllers/reclamation.js';
 
   
 const router = express.Router();

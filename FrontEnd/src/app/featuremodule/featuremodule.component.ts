@@ -121,8 +121,8 @@ export class FeaturemoduleComponent implements OnInit {
 
     // hide the footer in list map and grid page
     if (
-      route.url == routes.listingmaplist ||
-      route.url == routes.listingmapgrid
+      route.url == routes.listinggrid ||
+      route.url == routes.listinggrid
     ) {
       this.hideFooter = true;
     } else {

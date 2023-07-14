@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from "express-validator";
-import {add_type_reclamation,getOnce_byId,getAll,update_reclamation_type} from '../Controller/type_reclamation.js';
+import {add_type_reclamation,getOnce_byId,getAll,update_reclamation_type} from '../Controllers/type_reclamation.js';
 
   
 const router = express.Router();

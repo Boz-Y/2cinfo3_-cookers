@@ -10,34 +10,6 @@ const routes: Routes = [
         (m) => m.ListingGridModule
       ),
   },
-  {
-    path: 'listing-grid-sidebar',
-    loadChildren: () =>
-      import('./listing-grid-sidebar/listing-grid-sidebar.module').then(
-        (m) => m.ListingGridSidebarModule
-      ),
-  },
-  {
-    path: 'listing-list-sidebar',
-    loadChildren: () =>
-      import('./listing-list-sidebar/listing-list-sidebar.module').then(
-        (m) => m.ListingListSidebarModule
-      ),
-  },
-  {
-    path: 'listingmap-grid',
-    loadChildren: () =>
-      import('./listingmap-grid/listingmap-grid.module').then(
-        (m) => m.ListingmapGridModule
-      ),
-  },
-  {
-    path: 'listingmap-list',
-    loadChildren: () =>
-      import('./listingmap-list/listingmap-list.module').then(
-        (m) => m.ListingmapListModule
-      ),
-  },
 
   ] },
  

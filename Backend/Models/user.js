@@ -10,27 +10,25 @@ const userSchema = new Schema(
         lastname: {
             type: String,
             required: true
-        },        
-        password: {
-            type: String,
-            required: true
-        },
-        confirmPassword: {
-            type: String,
-            required: true
-        },
+        }, 
         phone: {
             type: Number,
             required: true
         },
         mail: {
             type: String,
-            required: true
-        },
-        status: {
+            required: true,
+            unique: true
+          },
+          password: {
             type: String,
             required: true
-        }
+          },
+        Role: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Role',
+            required: true
+          }
     },
     {
         timestamps: true

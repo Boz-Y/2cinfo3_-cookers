@@ -63,6 +63,7 @@ export async function getParticipantEvent(req,res) {
                   nomUser: user.firstname,
                   prenomUser: user.lastname
                 })
+              
          
             } catch (error) {
               console.error("Error generating PDF:", error);
@@ -128,6 +129,5 @@ export async function approuveParticipant(req,res){
      result: false
    });
    } 
-
 
 }

@@ -18,9 +18,9 @@ router.post('/register', registerUser);
 router.post('/verify-email', verifyEmail);
 router.post('/login', logIn);
 router.post('/forget-password', forgetPass);
-router.post('/reset-password', validator, reset);
+router.post('/reset-password',  reset);
 router.put('/updateUser/:id', protectSimpleUser, updateUser);
-router.get('/getuser/:id', protectSimpleUser, findUserById);
+router.get('/getuser/:id',  findUserById);
 router.route('/:mail').delete(deleteOnce);
 
 export default router;
