@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
-import reclamSchema from "../Models/reclamation.js";
+import reclamSchema from "../Models/reclamation.js"
+import nodemailer from 'nodemailer';
 
 //------------------------------AddReclamtion--------------------------------------/
 
@@ -12,8 +13,7 @@ export function add_reclamation(req, res) {
       etat: req.body.etat,
       commentaire: req.body.commentaire,
       id_type : req.body.id_type
-     
-      
+           
   })
     .then((new_reclamation) => {
       res.status(200).json({ result: true
@@ -37,7 +37,6 @@ export function getOnce_byId(req, res) { reclamSchema.findById(req.params.id)
   });
 }
 
-
 //------------------------------getByUser--------------------------------------/
 export function getReclamationsByUserId(req, res) {
   const { id_user } = req.params;
@@ -51,9 +50,7 @@ export function getReclamationsByUserId(req, res) {
           etat: docs[i].etat,
           commentaire: docs[i].commentaire,
           id_type: docs[i].id_type
-         
-
-        });
+           });
       }
       res.status(200).json({ data: list, result: true });
     })
@@ -61,8 +58,8 @@ export function getReclamationsByUserId(req, res) {
       res.status(500).json({ result: false });
     });
 }
-
 //------------------------------getByType--------------------------------------/
+
 export function getReclamationsByType(req, res) {
   const { id_type } = req.params;
   reclamSchema.find({ id_type })
@@ -75,7 +72,6 @@ export function getReclamationsByType(req, res) {
           etat: docs[i].etat,
           commentaire: docs[i].commentaire,
           id_type: docs[i].id_type
-          
         });
       }
       res.status(200).json({ data: list, result: true });
@@ -85,10 +81,7 @@ export function getReclamationsByType(req, res) {
     });
 }
 
-
-
 //------------------------------getAll--------------------------------------/
-
 
 export function getAll(req, res) {
   reclamSchema.find({})
@@ -114,16 +107,7 @@ export function getAll(req, res) {
 }
 
 
-//delet si admin n'as pas rpondu  
-// export function delete_reclamation(req, res) {
-//   reclamSchema.findByIdAndRemove(req.params.id)
-//     .then(() => {
-//       res.status(200).json({ result :true });
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ result: false });
-//     });
-// }
+
 export function deleteReclamation(req, res) {
    const { id } = req.params;
    reclamSchema.findByIdAndRemove(id)
@@ -183,4 +167,162 @@ export function updateReclamation(req, res) {
 }
 
 
-/***********************************Fonction de statistique******************************* */
+/***********************************Notification******************************* */
+export function envoyerEmailUtilisateur(req, res) {
+  const { email, sujet, contenu } = req.body;
+
+  
+  // user.findById(id)
+  //    .then((utilisateur) => {
+  //      if (!utilisateur) {
+        
+  //       return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+  //     }
+
+     
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+          port: 587,
+          secure: false,
+        auth: {
+          // user: 'cookerscookers4@gmail.com',
+          // pass: 'cookerscookers123',
+          user: 'jaweher.hamrouni@esprit.tn',
+          pass: 'azerty123',
+        },
+      });
+
+      // Préparer le message de l'e-mail
+      const message = {
+        from: 'jaweher.hamrouni@esprit.tn', // Remplacez par votre adresse e-mail
+        //to: utilisateur.mail,
+        to: email,
+        subject: sujet,
+        text: contenu,
+      };
+
+      // Envoyer l'e-mail
+      transporter.sendMail(message)
+        .then(() => {
+          // L'e-mail a été envoyé avec succès
+          res.status(200).json({ message: 'E-mail envoyé avec succès.' });
+        })
+        .catch((error) => {
+          // Une erreur s'est produite lors de l'envoi de l'e-mail
+          console.error('Erreur lors de l\'envoi de l\'e-mail :', error);
+          res.status(500).json({ message: 'Une erreur s\'est produite lors de l\'envoi de l\'e-mail.' });
+        });
+    // })
+    // .catch((error) => {
+    //   // Une erreur s'est produite lors de la recherche de l'utilisateur
+    //   console.error('Erreur lors de la recherche de l\'utilisateur :', error);
+    //   res.status(500).json({ message: 'Une erreur s\'est produite lors de la recherche de l\'utilisateur.' });
+    // });
+}
+
+
+// export function sendEmail(req, res) {
+//   // Étape 1: Configuration du transporteur de messagerie
+//   const transporter = nodemailer.createTransport({
+//     host: 'smtp.gmail.com', // Adresse du serveur SMTP
+//   port: 587, // Port du serveur SMTP
+//   secure: false, // true si vous utilisez SSL/TLS, false sinon
+//   auth: {
+//     user: 'cookerscookers4@gmail.com', // Adresse e-mail pour l'authentification
+//     pass: 'cookerscookers123' // Mot de passe pour l'authentification
+//   }
+//   });
+
+//   // Étape 2: Préparation du contenu de l'e-mail
+//   const commentaire = req.body.comment;
+
+//   const emailContent = {
+//     from: 'cookerscookers4@gmail.com',
+//     to: 'hamrounij5@gmail.com',
+//     subject: 'Réclamation',
+//     text: commentaire
+//   };
+
+  
+//   // Étape 3: Envoi de l'e-mail
+//   transporter.sendMail(emailContent, (error, info) => {
+//     if (error) {
+//       console.error('Erreur lors de l\'envoi de l\'e-mail:', error);
+//       res.status(500).send('Erreur lors de l\'envoi de l\'e-mail');
+//     } else {
+//       console.log('E-mail envoyé avec succès!', info.messageId);
+//       res.status(200).send('E-mail envoyé avec succès');
+//     }
+//   });
+// }
+
+
+//-----------------Statstique-------------------------------------------//
+
+   //---NB reclamation  ----------/
+
+   export function getTotalReclamations(req, res) {
+    reclamSchema.countDocuments()
+      .then((totalReclamations) => {
+        res.status(200).json({ totalReclamations });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: 'Une erreur s\'est produite lors du calcul du nombre total des réclamations.' });
+      });
+  }
+
+
+
+   //---NB reclamation par etat ----------/
+   export function getReclamationsByEtat(req, res) {
+    reclamSchema.aggregate([
+      { $group: { _id: "$etat", count: { $sum: 1 } } }
+    ])
+      .then((reclamations) => {
+        res.status(200).json({ reclamations });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: 'Une erreur s\'est produite lors du calcul des statistiques par état des réclamations.' });
+      });
+  }
+
+//---NB reclamation par type ----------/
+
+
+export function getNBReclamationsByType(req, res) {
+  reclamSchema.aggregate([
+    {
+      $lookup: {
+        from: 'type_reclamations',
+        localField: 'id_type',
+        foreignField: '_id',
+        as: 'type_reclamation'
+      }
+    },
+    { $unwind: '$type_reclamations' },
+    { $group: { _id: '$type_reclamations.type', count: { $sum: 1 } } }
+  ])
+    .then((reclamations) => {
+      res.status(200).json({ reclamations });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: 'Une erreur s\'est produite lors du calcul des statistiques par type des réclamations.' });
+    });
+}
+
+
+
+//-----Réclamations les plus récentes (triées par date de création) ---//
+
+export function getRecentReclamations(req, res) {
+  const { limit } = req.params;
+  reclamSchema.find()
+    .sort({ createdAt: -1 })
+    .limit(Number(limit))
+    .then((reclamations) => {
+      res.status(200).json({ reclamations });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: 'Une erreur s\'est produite lors de la récupération des réclamations les plus récentes.' });
+    });
+}
