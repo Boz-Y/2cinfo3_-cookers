@@ -1,25 +1,26 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { routes } from 'src/app/core/helpers/routes/routes';
+import { AuthService } from '../../service/auth.service';
+import { TokenStorageService } from '../../service/token-storage.service';
+import {ToastrService} from "ngx-toastr";
+import {NgxSpinnerService} from "ngx-spinner";
+import { HttpClient } from '@angular/common/http';
 
-declare const FB: any; // Declare the `FB` object
-declare const gapi: any; // Declare the `gapi` object
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit,  AfterViewInit {
-  ngOnInit(): void {
-    this.loadGoogleSignInClient();
-  }
+export class LoginComponent implements OnInit {
+
   public routes = routes;
   public Toggledata = false;
 
-  constructor(public router:Router){
-    
-  }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService,private router:Router,private toastr: ToastrService,private spinner:NgxSpinnerService) { }
+
+  
   path(){
     this.router.navigate([routes.login])
   }
@@ -29,63 +30,49 @@ export class LoginComponent implements OnInit,  AfterViewInit {
   
   }
 
-  loadGoogleSignInClient(): void {
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
+  form: any = {
+    mail: null,
+    password: null
+  };
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
 
-    script.onload = () => {
-      // The Google Sign-In client script has been loaded
-      this.initializeGoogleSignIn();
-    };
-  }
-
-  initializeGoogleSignIn(): void {
-    // Initialize the Google Sign-In client
-    gapi.load('auth2', () => {
-      gapi.auth2.init({
-        client_id: '781943891006-ctdghgsrl5rq7g8eumkrcrjfnoq8pq0t.apps.googleusercontent.com'
-      }).then(() => {
-        console.log('Google Sign-In client initialized.');
-        // You can now use the Google Sign-In client methods
-      }).catch((error: any) => {
-        console.error('Error initializing Google Sign-In client:', error);
-      });
-    });
-  }
-
-  // Other component methods and code...
-  ngAfterViewInit() {
-    this.loadFacebookSDK();
-  }
-
-  loadFacebookSDK() {
-    // Load the Facebook SDK asynchronously
-    (function(d: Document, s: string, id: string) {
-      var js: HTMLScriptElement, fjs: HTMLElement = d.getElementsByTagName(s)[0] as HTMLElement;
-      if (d.getElementById(id)) return;
-      js = d.createElement(s) as HTMLScriptElement; js.id = id;
-      js.src = "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v17.0&protocol=https";
-      if (fjs.parentNode) {
-        fjs.parentNode.insertBefore(js, fjs);
-      }
-    }(document, 'script', 'facebook-jssdk'));
-  }
   
+  ngOnInit(): void {
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getUser().roles;
+    }
+  }
+  onSubmit(): void {
+    const { username, password } = this.form;
+    this.authService.login(username, password).subscribe(
+      data => {
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveUser(data);
+        this.tokenStorage.saveLogin(data.login);
 
-  onFacebookLogin() {
-    // Handle Facebook login event
-    FB.login(function(response: any) {
-      if (response.authResponse) {
-        // User is logged in and authorized
-        // Perform any desired actions
-      } else {
-        // User cancelled the login process
-        // Handle accordingly
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+
+        this.roles = this.tokenStorage.getUser().roles;
+        this.tokenStorage.saveRole(this.roles);
+
+        this.spinner.show();
+        this.router.navigate(["home"]);
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 2000);
+        this.toastr.success('Bienvenue '+data.login+' !', 'Authentification avec succés!');
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.toastr.error(this.errorMessage, 'Error!');
+        this.isLoginFailed = true;
       }
-    });
+    );
   }
 
 }

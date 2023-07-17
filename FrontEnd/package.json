@@ -35,6 +35,8 @@
     "ngx-countup": "^13.1.0",
     "ngx-lightbox": "^3.0.0",
     "ngx-owl-carousel-o": "^15.0.0",
+    "ngx-spinner": "^14.0.0",
+    "ngx-toastr": "^17.0.2",
     "node-modules": "^0.0.1",
     "primeng": "^15.2.0",
     "rxjs": "~7.8.0",

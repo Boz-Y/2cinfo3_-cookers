@@ -1,24 +1,37 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
+const AUTH_API = 'http://127.0.0.1:9090/user';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+// @ts-ignore
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
-  apiUrl = 'http://127.0.0.1:9090/'; // Remplacez cette valeur par l'URL de votre API
+export class AuthService {
+  constructor(private http: HttpClient) { }
 
-  constructor(private http: HttpClient) {}
-
-  signup(user: any) {
-    return this.http.post(`${this.apiUrl}/register`, user);
+  login(mail: any, password: any): Observable<any> {
+    return this.http.post(AUTH_API + '/login', {
+      mail,
+      password
+    }, httpOptions);
   }
 
-  login(user: any) {
-    return this.http.post(`${this.apiUrl}/login`, user);
-  }
-
-  forgetPass(user: any) {
-    return this.http.post(`${this.apiUrl}/forget-password`, user);
+  register(firstname:any,lastname:any,phone:any,mail:any,password:any,role:any): Observable<any> {
+    return this.http.post(AUTH_API + '/register', {
+    
+      firstname,
+      lastname,
+      phone,
+      mail,
+      password,
+      role
+    }, httpOptions);
   }
 }
