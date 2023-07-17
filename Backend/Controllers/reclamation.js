@@ -1,27 +1,49 @@
 import { validationResult } from "express-validator";
 import reclamSchema from "../Models/reclamation.js"
+import Type_Reclamation from "../Models/type_reclamation.js"
+import User from '../Models/user.js';
 import nodemailer from 'nodemailer';
-
 //------------------------------AddReclamtion--------------------------------------/
 
 export function add_reclamation(req, res) {
   if (!validationResult(req).isEmpty()) {
-    res.status(400).json({ errors: validationResult(req).array() });
-  }else {
-    reclamSchema.create({
-      id_user: req.body.id_user,
-      etat: req.body.etat,
-      commentaire: req.body.commentaire,
-      id_type : req.body.id_type
-           
-  })
-    .then((new_reclamation) => {
-      res.status(200).json({ result: true
+    return res.status(400).json({ errors: validationResult(req).array() });
+  } else {
+    const { firstname, email,typeReclamation, commentaire } = req.body;
+
+    User.findOne({ mail: email })
+      .then((User) => {
+        if (!User) {
+          return res.status(404).json({ message: "Utilisateur non trouvé." });
+        }
+
+        // Recherche du type de réclamation par le type fourni dans le corps
+        Type_Reclamation.findOne({ type:typeReclamation })
+          .then((type) => {
+            if (!type) {
+              return res.status(404).json({ message: "Type de réclamation non trouvé." });
+            }
+
+            reclamSchema.create({
+              id_user: User._id,
+              etat: 0, // État initial de la réclamation (par exemple, 0 pour "en attente")
+              id_type: type._id, // Utilisation de l'ID du type de réclamation trouvé
+              commentaire: commentaire,
+            })
+              .then((new_reclamation) => {
+                res.status(200).json({ result: true });
+              })
+              .catch((err) => {
+                res.status(500).json({ result: false });
+              });
+          })
+          .catch((err) => {
+            res.status(500).json({ result: false });
+          });
+      })
+      .catch((err) => {
+        res.status(500).json({ result: false });
       });
-    })
-    .catch((err) => {
-      res.status(500).json({ result: false });
-    });
   }
 }
 

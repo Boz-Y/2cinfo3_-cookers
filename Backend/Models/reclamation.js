@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const reclamation = new Schema(
-    { 
-        
+    {         
         id_user: {
             type: Schema.Types.ObjectId,
             ref : "utilisateur",
