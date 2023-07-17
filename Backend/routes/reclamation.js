@@ -6,6 +6,11 @@ import {envoyerEmailUtilisateur,add_reclamation,getOnce_byId ,getAll,getReclamat
   getReclamationsByEtat,
   getNBReclamationsByType,
   getRecentReclamations,} from '../Controllers/reclamation.js';
+
+import { body } from "express-validator";
+import {add_reclamation,getOnce_byId ,getAll,getReclamationsByUserId,getReclamationsByType,deleteReclIfStatusIsOne,updateReclamation} from '../Controllers/reclamation.js';
+
+
   
 const router = express.Router();
 

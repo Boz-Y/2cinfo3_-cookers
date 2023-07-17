@@ -58,6 +58,7 @@ const EventSchema = new Schema(
 
        // required: true,
 
+
       },
     pourcentage: {
         type: Number,

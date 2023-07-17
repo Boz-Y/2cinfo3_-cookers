@@ -19,17 +19,32 @@ export async function getEvent(req, res) {
   }
 }
 
+export async function getEventById(req, res) {
+  try {
+    const event = await Evenement.findById({ _id: req.params.id });
+
+    res.status(200).json({
+      result: true,
+      data: event,
+    });
+  } catch (error) {
+    res.status(500).json({ result: false });
+  }
+}
+
 
 ///TODO ajout liste image 
 export async function addEvent(req, res) {
   try {
-    //${req.protocol}://${req.get('host')}/
+    
     var files = [];
     if(req.files != null){
     files = req.files.map((file) => `public/images/evenement/${file.filename}`);
     }
 
-    const specialites = req.body.specialites.map((spec) => new mongoose.Types.ObjectId(spec) );
+    console.log(files);
+
+   // const specialites = req.body.specialites.map((spec) => new mongoose.Types.ObjectId(spec) );
     var data = {
       nom: req.body.nom,
       description: req.body.description,
@@ -37,11 +52,13 @@ export async function addEvent(req, res) {
       date_debut: req.body.date_debut,
       date_fin: req.body.date_fin,
       date_fin_vote: req.body.date_fin_vote,
-      pourcentage: req.body.pourcentage,
+      pourcentage: req.body.prix_reduction,
       images: files,
       user_createur: new mongoose.Types.ObjectId(req.body.user_createur),
-      specialites: specialites
+     // specialites: specialites
     }
+
+    console.log(data)
 
     const event = await Evenement.create(data);
     event.save();
