@@ -39,4 +39,5 @@ var platSchema = new Schema(
     }
 );
 
+
 export default model('Plats', platSchema);

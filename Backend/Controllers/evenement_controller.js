@@ -7,11 +7,12 @@ import { qrCodeGenerator } from "./utils/qrCode.js";
 
 export async function getEvent(req, res) {
   try {
-    const event = await Evenement.find({ user_createur: req.body.id_user });
 
+      const event = await Evenement.find({ user_createur: req.body.id_user });
+      console.log(event)
     res.status(200).json({
       result: true,
-      data: event,
+      data: event
     });
   } catch (error) {
     res.status(500).json({ result: false });
@@ -62,21 +63,29 @@ export async function addEvent(req, res) {
   }
 }
 
-export async function updateEvent(req, res) {
-  try {
-    await Evenement.updateOne(
-      { _id: mongoose.Types.ObjectId(req.body.eventId) },
-      {
-        $set: req.body,
-      }
-    );
+ export async function updateEvent(req, res) {
+      try {
+          
+          await Evenement.updateOne(
+          {_id:mongoose.Types.ObjectId(req.body.eventId)} ,
+          {
+            $set:req.body
+          }
+         )
+          
+           res.status(200).json({
+             result: true
+           });
+         
+      } catch (error) {
+       res.status(500).json({
+        result: false
+      });
+      } 
+   }
 
-    res.status(200).json({
-      result: true,
-    });
-  } catch (error) {
-    res.status(500).json({
-      result: false,
-    });
-  }
-}
+
+   
+   
+
+   

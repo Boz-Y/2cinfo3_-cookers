@@ -47,13 +47,17 @@ const EventSchema = new Schema(
     user_createur: {
       type: Schema.Types.ObjectId,
       ref: "Users",
-      required: true,
+
+      //required: true,
+
     },
     specialites: 
       {
         type: [Schema.Types.ObjectId],
         ref: "Specialite",
-        required: true,
+
+       // required: true,
+
       },
     pourcentage: {
         type: Number,

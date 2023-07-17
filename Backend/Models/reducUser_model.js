@@ -4,9 +4,9 @@ const { Schema, model } = mongoose;
 const ReducUserSchema = new Schema(
     {
 
-        id_ReducUser: {
+        id_user: {
             type: Schema.Types.ObjectId, 
-            ref:"utilisateur",
+            ref:"Users",
             required: true
         },
         id_evenement: {
@@ -17,6 +17,11 @@ const ReducUserSchema = new Schema(
             type: Boolean,
             required: true,
             default: false
+        },
+
+        code: {
+            type: String,
+            required: true,
         }
 
     },
