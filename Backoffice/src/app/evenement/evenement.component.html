@@ -1,0 +1,82 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="col-md-4">
+            <button mat-raised-button class="btn btn-success btn-block" [routerLink]="['/evenement-add']"  >Ajouter un événement</button>
+        </div>
+        <div class="row">
+           
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Nos événement</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Nom
+                                    </th>
+                                    <th>
+                                        Description
+                                    </th>
+                                    <th>
+                                        Nombre de place
+                                    </th>
+                                    <th>
+                                        Nombre de place restant
+                                    </th>
+                                    <th>
+                                        Date debut
+                                    </th>
+                                    <th>
+                                        Date fin
+                                    </th>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+                                        #
+                                    </th>
+                                </thead>
+                                <tbody>
+                                
+                                    <tr *ngFor="let data of listEvent">
+                                        <td>
+                                            {{data.nom}}
+                                        </td>
+                                        <td>
+                                            {{data.description}}
+                                        </td>
+                                        <td>
+                                            {{data.nb_participant}}
+                                        </td>
+                                        <td>
+                                            {{data.nb_place_restant}}
+                                        </td>
+                                        <td>
+                                            {{ data.date_debut | date:'dd/MM/yyyy' }}
+                                        </td>
+                                        <td>
+                                            {{ data.date_fin | date:'dd/MM/yyyy' }}
+                                        </td>
+                                        <td>
+                                            <!-- <button mat-raised-button (click)="onDelete()"> -->
+                                                <i class="material-icons" (click)="onDelete()">delete</i>
+                                              <!-- </button> -->
+                                        </td>
+                                        <td>
+                                            <i class="material-icons" [routerLink]="['/evenement-update', data]">edit</i>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+  </div>

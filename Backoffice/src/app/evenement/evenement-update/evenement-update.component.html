@@ -1,0 +1,69 @@
+<!-- TODO add specialité required -->
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Mettre a jour un événement</h4>
+                    </div>
+                    <div class="card-body">
+                        <form  #form="ngForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                  <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Nom de l'événment"  [(ngModel)]="nom" required>
+                                    </mat-form-field>
+                                </div>
+                              </div>
+                                <div class="row">
+                                <div class="col-md-12">
+                                  <mat-form-field class="example-full-width">
+                                     <textarea matInput placeholder="Description de l'événement" [(ngModel)]="description" required></textarea>
+                                   </mat-form-field>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                             
+                                      <input type="date" matInput placeholder="Date debut" [(ngModel)]="date_debut" required >
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                           
+                                      <input type="date" matInput placeholder="Date fin" [(ngModel)]="date_fin" required >
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                             
+                                      <input type="date" matInput placeholder="Date fin de vote" [(ngModel)]="date_fin_vote" required >
+                                    </mat-form-field>
+                                </div>
+                              </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Nombre de place" type="number" [(ngModel)]="nb_participant" required>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Prix de réduction" type="number" [(ngModel)]="prix_reduction" required>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right">Mettre a jour</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
