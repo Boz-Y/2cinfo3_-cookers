@@ -23,6 +23,7 @@ import ParticipantRoutes from './routes/participant_route.js';
 import VoteRoutes from './routes/vote_route.js';
 import BesoinsRoutes from './routes/BesoinPlatsIngredients.js'; 
 import ReducUserRoutes from './routes/reducUser_route.js';
+import CommandeRoutes from './routes/Commande.js';
 
 
 const app = express(); // creer l'instance de express a utiliser
@@ -56,6 +57,7 @@ mongoose
   );
 
   app.use('/reclamation', reclamation_route);
+  app.use('/Commande', CommandeRoutes);
   app.use('/reclamation_type', reclamation_type_route);
   app.use('/plats', PlatsRoutes);
   app.use('/ingredients', IngredientsRoutes);

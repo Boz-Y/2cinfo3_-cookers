@@ -8,7 +8,6 @@ import {envoyerEmailUtilisateur,add_reclamation,getOnce_byId ,getAll,getReclamat
   getRecentReclamations,} from '../Controllers/reclamation.js';
 
 import { body } from "express-validator";
-import {add_reclamation,getOnce_byId ,getAll,getReclamationsByUserId,getReclamationsByType,deleteReclIfStatusIsOne,updateReclamation} from '../Controllers/reclamation.js';
 
 
   

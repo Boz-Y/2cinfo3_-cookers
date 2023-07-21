@@ -1,34 +1,30 @@
 // Import the required models
-import Commande  from '../Models/Commande.js';
+import Commande from '../Models/Commande.js';
 import LigneCommande from '../Models/Ligne_commande.js';
 
 // LigneCommande Controllers
 
-// Create a new LigneCommande
-export function createLigneCommande(req, res) {
+const createLigneCommande = (req, res) => {
   try {
-    ligneCommande =  LigneCommande.create(req.body);
+    const ligneCommande =  LigneCommande.create(req.body);
     res.status(201).json(ligneCommande);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create LigneCommande'+error });
+    res.status(500).json({ error: 'Failed to create LigneCommande' + error });
   }
-  
 };
 
-// Get all LigneCommandes
-export function getAllLigneCommandes(req, res) {
+const getAllLigneCommandes = (req, res) => {
   try {
-     ligneCommandes =  LigneCommande.find();
+    const ligneCommandes =  LigneCommande.find();
     res.json(ligneCommandes);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch LigneCommandes' });
   }
 };
 
-// Get a single LigneCommande by ID
-export function getLigneCommandeById(req, res){
+const getLigneCommandeById = (req, res) => {
   try {
-     ligneCommande =  LigneCommande.findById(req.params.id);
+    const ligneCommande =  LigneCommande.findById(req.params.id);
     if (!ligneCommande) {
       return res.status(404).json({ error: 'LigneCommande not found' });
     }
@@ -38,10 +34,9 @@ export function getLigneCommandeById(req, res){
   }
 };
 
-// Update a LigneCommande
-export function updateLigneCommande(req, res){
+const updateLigneCommande = (req, res) => {
   try {
-     ligneCommande =  LigneCommande.findByIdAndUpdate(
+    const ligneCommande =  LigneCommande.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
@@ -55,10 +50,9 @@ export function updateLigneCommande(req, res){
   }
 };
 
-// Delete a LigneCommande
-export function deleteLigneCommande(req, res){
+const deleteLigneCommande = (req, res) => {
   try {
-     ligneCommande =  LigneCommande.findByIdAndRemove(req.params.id);
+    const ligneCommande =  LigneCommande.findByIdAndRemove(req.params.id);
     if (!ligneCommande) {
       return res.status(404).json({ error: 'LigneCommande not found' });
     }
@@ -70,34 +64,27 @@ export function deleteLigneCommande(req, res){
 
 // Commande Controllers
 
-// Create a new Commande
-export function createCommande(req, res){
-
-  
+const createCommande = (req, res) => {
   Commande.create({
     id_user: req.body.id_user,
     etat: req.body.etat,
     pourcentage_reduction: req.body.pourcentage_reduction,
   })
-    .then((Commande) => {
-      
-      res.status(200).json({
-        id_user: Commande.id_user,
-        etat: Commande.etat,
-        pourcentage_reduction: Commande.pourcentage_reduction,                
-      });
-    })
-    .catch((err) => {
-      res.status(404).json({ error: err });
+  .then((Commande) => {
+    res.status(200).json({
+      id_user: Commande.id_user,
+      etat: Commande.etat,
+      pourcentage_reduction: Commande.pourcentage_reduction,
     });
+  })
+  .catch((err) => {
+    res.status(404).json({ error: err });
+  });
 };
 
-// Get all Commandes
-export function getAllCommandes(req, res){
-
+const getAllCommandes = (req, res) => {
   Commande
   .find({})
-
   .then(docs => {
     res.status(200).json(docs);
   })
@@ -106,10 +93,9 @@ export function getAllCommandes(req, res){
   });
 };
 
-// Get a single Commande by ID
-export function getCommandeById(req, res){
+const getCommandeById = (req, res) => {
   try {
-     commande =  Commande.findById(req.params.id);
+    const commande =  Commande.findById(req.params.id);
     if (!commande) {
       return res.status(404).json({ error: 'Commande not found' });
     }
@@ -119,10 +105,9 @@ export function getCommandeById(req, res){
   }
 };
 
-// Update a Commande
-export function updateCommande(req, res){
+const updateCommande = (req, res) => {
   try {
-     commande =  Commande.findByIdAndUpdate(
+    const commande =  Commande.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
@@ -136,10 +121,9 @@ export function updateCommande(req, res){
   }
 };
 
-// Delete a Commande
-export function deleteCommande(req, res){
+const deleteCommande = (req, res) => {
   try {
-     commande =  Commande.findByIdAndRemove(req.params.id);
+    const commande =  Commande.findByIdAndRemove(req.params.id);
     if (!commande) {
       return res.status(404).json({ error: 'Commande not found' });
     }
@@ -149,11 +133,10 @@ export function deleteCommande(req, res){
   }
 };
 
-
 // Calculate the total price for a Commande
-export function calculateCommandeTotalPrice(req, res){
+const calculateCommandeTotalPrice = (req, res) => {
   try {
-     ligneCommandes =  LigneCommande.find({ id_commande: commandeId });
+    const ligneCommandes =  LigneCommande.find({ id_commande: commandeId });
     let totalPrice = 0;
 
     ligneCommandes.forEach((ligneCommande) => {
@@ -165,3 +148,14 @@ export function calculateCommandeTotalPrice(req, res){
     throw new Error('Failed to calculate Commande total price');
   }
 };
+export {   createLigneCommande,
+  getAllLigneCommandes,
+  getLigneCommandeById,
+  updateLigneCommande,
+  deleteLigneCommande,
+  createCommande,
+  getAllCommandes,
+  getCommandeById,
+  updateCommande,
+  deleteCommande,
+  calculateCommandeTotalPrice, };

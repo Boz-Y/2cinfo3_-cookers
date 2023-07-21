@@ -6,7 +6,7 @@ const Commande = new Schema(
         
         id_user: {
             type: Schema.Types.ObjectId,
-            ref : "utilisateur",
+            ref : "Users",
             required: true
         },
 
