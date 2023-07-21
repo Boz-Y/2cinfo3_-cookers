@@ -11,7 +11,9 @@ import { EvenementComponent } from './evenement/evenement.component';
 import { EvenementAddComponent } from './evenement/evenement-add/evenement-add.component';
 import { MatInputModule } from '@angular/material/input';
 import { EvenementUpdateComponent } from './evenement/evenement-update/evenement-update.component';
-
+import {AuthService} from './service/auth.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -26,12 +28,16 @@ import { EvenementUpdateComponent } from './evenement/evenement-update/evenement
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    LoginComponent,
+    RegisterComponent,
     EvenementComponent,
     EvenementAddComponent,
     EvenementUpdateComponent,
 
   ],
-  providers: [],
+  providers: [
+    AuthService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

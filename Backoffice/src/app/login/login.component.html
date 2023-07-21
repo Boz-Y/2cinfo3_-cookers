@@ -1,0 +1,69 @@
+
+    <!-- Login Section -->
+    <div class="login-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-5 mx-auto">
+                    <div class="login-wrap">
+
+                        <div class="login-header">
+                            <h3>Bienvenue !</h3>
+                            <p>Veuillez entrer vos détails</p>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form class="signin-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group group-img">
+                                <div class="group-img">
+                                    <i class="feather-user"></i>
+                             <input type="text" class="form-control" id="username" placeholder="username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"  id="inputusername4">
+                                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                <div *ngIf="f.username.errors.required">username is required</div>
+                                <div *ngIf="f.username.errors.username">username must be a valid username</div>
+                            </div>
+                                
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="pass-group group-img">
+                                    <i class="feather-lock"></i>
+                                  <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password"[ngClass]="{ 'is-invalid': submitted && f.password.errors }" id="inputPassword4">
+                                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                <div *ngIf="f.password.errors.required">Password is required</div>
+                            </div>
+                    
+                                </div>
+                            </div>
+                            <div class="row">
+                               
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="text-md-end">
+                                        <a class="forgot-link" >Mot de passe oublié ?</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 login-btn" type="submit">Se Connecter</button>
+                        </form>
+                            <div class="register-link text-center">
+                                <p>Créer un nouveau compte ? <a class="forgot-link" >S'inscrire</a></p>
+                            </div>
+                            <div class="login-or">
+                                <span class="or-line"></span>
+                                <span class="span-or">Se connecter avec les Réseaux Sociaux</span>
+                            </div>
+                            <br>
+                            
+                            <br>
+                            <div class="social-login">
+                            <div id="fb-root"></div>
+                            <div class="fb-login-button" data-width="350" data-size="" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="true"></div>
+                             </div>
+                             <!-- /Login Form -->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /Login Section -->
