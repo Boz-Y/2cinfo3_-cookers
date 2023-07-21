@@ -1,8 +1,8 @@
-export class User {
-  id?:number;
-  firstname?:string;
-  lastname?:string;
-  phone?:number;
-  mail?:string;
-  password?:string
+// user.model.ts
+export interface User {
+  _id: string;
+  username: string;
+  email: string;
+  roles: string[];
+  token: string;
 }

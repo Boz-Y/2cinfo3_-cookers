@@ -8,19 +8,39 @@ import { catchError } from 'rxjs/operators';
 
 const API_URL = 'http://127.0.0.1:9090/user';
 
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+// @ts-ignore
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
+  private apiUrl ='http://127.0.0.1:9090/user';
+
+  constructor(private httpClient: HttpClient,private http: HttpClient) { }
+
+  forget(email: string): Observable<User> {
+    const credentials = { email };
+    return this.http.post<User>(API_URL+'/forgotPassword', credentials);
+  }
+  
+  getUserProfile(userId: string): Observable<User> {
+    const token = localStorage.getItem('access_token'); // Retrieve the token from localStorage
+    if (!token) {
+      throw new Error('No token provided!'); // Handle the case where the token is missing or invalid
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `${this.apiUrl}/users/profiles/${userId}`;
+
+    return this.http.get<User>(url, { headers });
   }
 
-  constructor(private httpClient: HttpClient) { }
-
+  
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(API_URL+'/all')
       .pipe(

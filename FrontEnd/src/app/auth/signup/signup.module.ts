@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {authInterceptorProviders} from "../../helpers/auth.interceptor";
 import {AuthService} from "../../service/auth.service";
+import { AuthInterceptor } from '../../helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import {AuthService} from "../../service/auth.service";
   imports: [
     CommonModule,
     SignupRoutingModule,
-    FormsModule,
+    FormsModule, // Assurez-vous que FormsModule est importé ici
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     HttpClientModule,
@@ -27,6 +28,7 @@ import {AuthService} from "../../service/auth.service";
   providers: [
     authInterceptorProviders,
     AuthService,
+    AuthInterceptor,
     ToastrService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

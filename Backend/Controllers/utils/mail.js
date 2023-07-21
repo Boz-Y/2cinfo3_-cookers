@@ -23,12 +23,5 @@ const generateToken = (id) => {
     expiresIn: "365d",
   });
 };
-// const generateToken = (userId) => {
-//     // Generate the token using jwt.sign() function
-//     const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-//       expiresIn: '1d', // Set the expiration time for the token
-//     });
-  
-//     return token;
-//   };
+
 export { generatorOTP, mailTransport, generateToken };

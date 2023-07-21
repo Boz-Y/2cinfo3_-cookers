@@ -4,7 +4,9 @@ import { routes } from 'src/app/core/helpers/routes/routes';
 import {AuthService} from "../../service/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
-import { HttpClient } from '@angular/common/http';
+import { Signup } from '../../Models/signup';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AuthInterceptor}  from '../../helpers/auth.interceptor';
 
 
 @Component({
@@ -15,57 +17,69 @@ import { HttpClient } from '@angular/common/http';
 export class SignupComponent implements OnInit {
   public routes = routes;
   public Toggledata = false;
-
-  role:any;
-  form: any = {
-    firstname:null,
-    lastname: null,
-    phone:null,
-    mail: null,
-    password: null,
-    role:null
-  };
-  isSuccessful = false;
-  isSignUpFailed = false;
-  errorMessage = '';
-  constructor(private authService:AuthService,private toastr :ToastrService,private router :Router,private spinner :NgxSpinnerService) { }
-
-  ngOnInit(): void {
-  }
-
-  onSubmit(): void {
-    const roleSelected =document.getElementById('role') as HTMLSelectElement;
-    const roleValue=roleSelected.value;
-    this.form.role=[roleValue];
-
-    const { name,firstname,cin,phoneNumber,email,role } = this.form;
-
-    this.authService.register(name,firstname,cin,phoneNumber,email,role).subscribe(
-       data => {
-         console.log(data);
-         this.spinner.show();
-         this.toastr.success('Utilisateur : '+this.form.firstname+' '+this.form.name+' ajouté avec succés','Authentification avec succés!');
-         this.router.navigate([""]);
-         setTimeout(() => {
-           this.spinner.hide();
-         }, 2000);
+//Form Validables 
+registerForm:any = FormGroup;
+submitted = false;
+usernamePattern = /^[a-zA-Z0-9_-]{3,16}$/;
+  username: any;
+  email:any;
+  password: any;
 
 
-       },
-        err => {
-              this.errorMessage = err.error.message;
-              console.log(err.error);
-              this.toastr.error(this.errorMessage, 'Error!');
-        }
-      );
-  }
+  constructor(private formBuilder: FormBuilder,private authInterceptor: AuthInterceptor,private authService: AuthService,private toastr :ToastrService,private router :Router,private spinner :NgxSpinnerService) {}
+   get f() { return this.registerForm.controls; }
   
-  path(){
+   path(){
     this.router.navigate([routes.login])
   }
   iconLogle() {
     this.Toggledata = !this.Toggledata;
    
    }
+
+     ngOnInit() {
+       //Add User form validations
+       this.registerForm = this.formBuilder.group({
+        username: ['', [Validators.required, Validators.pattern(this.usernamePattern)]],
+       email: ['', [Validators.required, Validators.email]],
+       password: ['', [Validators.required]]
+       });
+     }
   
-}
+     onSubmit() {
+      this.submitted = true;
+    
+      // Stop here if form is invalid
+      if (this.registerForm.invalid) {
+        return;
+      }
+    
+      // All fields are filled and form is valid, proceed with the form submission
+      this.username = this.registerForm.value.username;
+      this.email = this.registerForm.value.email;
+      this.password = this.registerForm.value.password;
+    
+      this.authService.signup(this.username, this.email, this.password).subscribe(
+        (response) => {
+          this.router.navigate([routes.login]);
+          // Log de statut de succès
+          alert("User registration successful. Confirmation email sent to admin.");
+        },
+        (error) => {
+          console.error(error);
+          // Vérifiez le statut de la réponse HTTP
+          if (error.status === 401) {
+            // Gérez les erreurs d'authentification ici (mauvais mot de passe, compte bloqué, etc.)
+            console.log('Authentication failed: Invalid username or password');
+          } else if (error.status === 404) {
+            console.log('Authentication failed: User not found');
+          } else if (error.status === 500) {
+            console.log('Internal server error');
+          } else {
+            console.log('Unknown error occurred');
+          }
+        }
+      );
+    }
+    
+  }

@@ -3,12 +3,14 @@ import express from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import cors from 'cors';
+import cookieSession  from 'cookie-session';
 import { config as dotenvConfig } from 'dotenv';
 dotenvConfig();
 
 //connect database
 import { notFoundError, errorHandler } from './Middelware/error-handler.js';
 
+import AuthRoutes from './routes/auth.js';
 import UsersRoutes from './routes/user.js';
 import RoleRoutes from './routes/Role.js';
 import reclamation_route from './routes/reclamation.js';
@@ -45,6 +47,13 @@ mongoose
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use('/img', express.static('public/images'));
+  app.use(
+    cookieSession({
+      name: "projectPi-session",
+      secret: "COOKIE_SECRET", // should use as secret environment variable
+      httpOnly: true
+    })
+  );
 
   app.use('/reclamation', reclamation_route);
   app.use('/reclamation_type', reclamation_type_route);
@@ -58,6 +67,7 @@ mongoose
   app.use('/reducUser',ReducUserRoutes);
   app.use('/user', UsersRoutes);
   app.use('/role', RoleRoutes);
+  app.use('/api', AuthRoutes);
   app.post('/user/api', (req,res) => {
     console.log(req.body);
     res.redirect('http://localhost:4200/userpages/dashboard')

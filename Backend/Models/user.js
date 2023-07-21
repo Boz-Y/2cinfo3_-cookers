@@ -2,37 +2,34 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema(
-    {
-        firstname: {
-            type: String,
-            required: true
-        },
-        lastname: {
-            type: String,
-            required: true
-        }, 
-        phone: {
-            type: Number,
-            required: true
-        },
-        mail: {
-            type: String,
-            required: true,
-            unique: true
-          },
-          password: {
-            type: String,
-            required: true
-          },
-        Role: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Role',
-            required: true
-          }
+  {
+    username: {
+      type: String,
+      required: true
     },
-    {
-        timestamps: true
+    email: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    statusUser: {
+      type: String,
+    },
+    statusCompte: {
+      type: String,
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    role: {
+      type: Schema.Types.ObjectId,
+      ref: 'Role'
     }
+  },
+  {
+    timestamps: true
+  }
 );
-
 export default model('Users', userSchema); 
+

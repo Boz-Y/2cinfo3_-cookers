@@ -19,6 +19,35 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     return next.handle(authReq);
   }
+
+  public saveToken(token: string): void {
+    localStorage.removeItem("token");
+    localStorage.setItem("token", token);
+  }
+
+  public saveLogin(login:any):void{
+    localStorage.removeItem("login");
+    localStorage.setItem("login", login);
+  }
+
+  public saveUser(user: any): void {
+    localStorage.removeItem("user");
+    localStorage.setItem("user", JSON.stringify(user));
+  }
+
+  public getToken(): string | null {
+    return localStorage.getItem("token");
+  }
+
+  removeToken(): void {
+    localStorage.removeItem('token');
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    // Vérifiez si le token est valide (par exemple, en utilisant une librairie comme jwt-decode)
+    return !!token;
+  }
 }
 
 export const authInterceptorProviders = [

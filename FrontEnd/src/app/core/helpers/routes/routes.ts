@@ -12,9 +12,6 @@ export class routes {
   public static get baseUrl(): string {
     return routes.Url;
   }
-  public static get blog(): string {
-    return this.baseUrl + '/blog';
-  }
   public static get contact(): string {
     return this.baseUrl + '/contact';
   }
