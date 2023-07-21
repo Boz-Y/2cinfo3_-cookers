@@ -14,6 +14,7 @@ import { EvenementUpdateComponent } from './evenement/evenement-update/evenement
 import {AuthService} from './service/auth.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { UsersComponent } from './users/users.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -33,6 +34,7 @@ import { RegisterComponent } from './register/register.component';
     EvenementComponent,
     EvenementAddComponent,
     EvenementUpdateComponent,
+    UsersComponent,
 
   ],
   providers: [

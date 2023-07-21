@@ -1,0 +1,62 @@
+<div class="main-content">
+    <div class="container-fluid">
+        
+        <div class="row">
+           
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Nos Utilisateurs</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Username
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        statusUser
+                                    </th>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+                                        #
+                                    </th>
+                                </thead>
+                                <tbody>
+                                
+                                    <tr *ngFor="let data of User">
+                                        <td>
+                                            {{data.Username}}
+                                        </td>
+                                        <td>
+                                            {{data.Email}}
+                                        </td>
+                                        <td>
+                                            {{data.statusUser}}
+                                        </td>
+                                        <td>
+                                            <!-- <button mat-raised-button (click)="onDelete()"> -->
+                                                <i class="material-icons" (click)="onDelete()">Block</i>
+                                              <!-- </button> -->
+                                        </td>
+                                        <td>
+                                            <i class="material-icons" [routerLink]="['/evenement-update', data]">Unblock</i>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+  </div>
