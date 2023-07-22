@@ -21,10 +21,16 @@ export class PlatService {
     return this._http.put<Plat>(`http://localhost:9090/plats/${id}`, data);
   }
 
-  getPlatList(){
-    return this._http.get<Plat[]>('http://localhost:9090/plats/');
+  getPlatList() {
+    return this._http.get<Plat[]>('http://localhost:9090/plats/')
+    
   }
 
+  // getPlatList() {
+  //   let data = "";
+  //   var result = this._http.get<any>('http://localhost:9090/plats/');
+  //   return result;
+  //   }
 
   deletePlat(id: number) {
     return this._http.delete<Plat>(`http://localhost:9090/plats/${id}`);

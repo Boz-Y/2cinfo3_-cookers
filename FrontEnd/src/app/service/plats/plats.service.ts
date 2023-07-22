@@ -40,24 +40,32 @@ export class PlatService {
     );
   }
 
+
+  // ...
+
   getPlatList(): Observable<Plat[]> {
-    return this._http.get<Plat[]>("http://localhost:9090/plats/").pipe(
-      map((plats: Plat[]) => this.removeDuplicates(plats))
-    );
+    return this._http.get<Plat[]>("http://localhost:9090/plats/");
   }
 
-  private removeDuplicates(plats: Plat[]): Plat[] {
-    const uniquePlats: Plat[] = [];
-    const platIds: number[] = [];
 
-    for (const plat of plats) {
-      if (!platIds.includes(plat._id)) {
-        uniquePlats.push(plat);
-        platIds.push(plat._id);
-      }
-    }
 
-    return uniquePlats;
-  }
+  // private removeDuplicates(plats: Plat[]): Plat[] {
+  //   // Use a Set to keep track of unique plats based on their unique identifier (e.g., platId).
+  //   const uniquePlats = new Set<string>();
+  //   const uniquePlatsArray: Plat[] = [];
+
+  //   for (const plat of plats) {
+  //     // Assuming your Plat model has a unique identifier 'platId', replace it with the actual property name if different.
+  //     const platId = plat._id;
+
+  //     // Check if the platId is already in the Set. If not, add the plat to the array of uniquePlatsArray.
+  //     if (!uniquePlats.has(platId)) {
+  //       uniquePlats.add(platId);
+  //       uniquePlatsArray.push(plat);
+  //     }
+  //   }
+
+  //   return uniquePlatsArray;
+  // }
 
 }

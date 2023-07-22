@@ -10,10 +10,12 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '',disabled: false },
-    { path: '/plat', title: 'Plat',  icon:'Plat', class: '',disabled: false },
+    { path: '/plat', title: 'Plat',  icon:'P', class: '',disabled: false },
+    { path: '/specialite', title: 'specialite',  icon:'S', class: '',disabled: false },
     { path: '/evenement', title: 'Evénement',  icon:'event', class: '',disabled: false },
     { path: '/Users', title: 'Users',  icon:'person', class: '',disabled: false },
     { path: '/evenement-add', title: 'Ajout événement',  icon:'event', class: '',disabled: true },
+    { path: '/specialite-add', title: 'Ajouter une spécialite',  icon:'S', class: '',disabled: true },
     { path: '/user-profile', title: 'User Profile',  icon:'person', class: '',disabled: false },
     { path: '/table-list', title: 'Commandes',  icon:'content_paste', class: '',disabled: false },
     { path: '/Signout', title: 'Signout',  icon:'logout', class: 'active-pro',disabled: false },

@@ -17,6 +17,7 @@ import { RegisterComponent } from './register/register.component';
 import { UsersComponent } from './users/users.component';
 import { SpecialityListComponent } from './speciality-list/speciality-list.component';
 import { PlatListComponent } from './plat-list/plat-list.component';
+import { SpecialiteAddComponent } from './speciality-list/specialite-add/specialite-add.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -39,6 +40,7 @@ import { PlatListComponent } from './plat-list/plat-list.component';
     UsersComponent,
     SpecialityListComponent,
     PlatListComponent,
+    SpecialiteAddComponent,
   ],
   providers: [
     AuthService,

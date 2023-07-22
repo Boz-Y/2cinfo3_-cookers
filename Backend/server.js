@@ -42,7 +42,13 @@ mongoose
     console.log(err);
   });
 
-  app.use(cors());
+  const corsOptions = {
+    origin: ['http://localhost:5200', 'http://localhost:4200'], // Remplacez avec les domaines de votre application Angular
+    optionsSuccessStatus: 200 // Facultatif : spécifiez un code de statut de succès personnalisé
+  };
+  
+  app.use(cors(corsOptions));
+  
   app.use(morgan('dev'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));

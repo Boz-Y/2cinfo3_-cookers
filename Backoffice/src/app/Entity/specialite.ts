@@ -1,4 +1,7 @@
 export interface Specialite {
-    id:String;
-    nom?:String;
+    _id: any;
+    name: string;
+    description: string;
+    specImg: any;
+
 }
