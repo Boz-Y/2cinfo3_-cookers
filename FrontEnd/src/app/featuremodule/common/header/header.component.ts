@@ -4,6 +4,8 @@ import { DataService } from 'src/app/service/data.service';
 import { routes } from 'src/app/core/helpers/routes/routes';
 import { SidebarService } from 'src/app/service/sidebar.service';
 import { CommonService } from 'src/app/service/common.service';
+import { MatDialog } from '@angular/material/dialog';
+import { IngredientsComponent } from 'src/app/ingredients/ingredients.component';
 
 @Component({
   selector: 'app-header',
@@ -20,11 +22,13 @@ export class HeaderComponent implements OnInit {
   public nav : boolean = false;
   header: Array<any> = [];
   sidebar: Array<any> = [];
-  
-  
+
+
 constructor(private data : DataService,private router: Router, private common: CommonService,
-  
-  private sidebarService: SidebarService){
+
+  private sidebarService: SidebarService,
+  private _dialog: MatDialog,
+  ){
   this.header = this.data.header;
   this.router.events.subscribe((event: any) => {
     if (event instanceof NavigationStart) {
@@ -39,19 +43,19 @@ private getroutes(route: any): void {
   this.base = splitVal[1];
   this.page = splitVal[2];
   this.last = splitVal[3];
-  
-  
+
+
 
   if (
-    this.base == 'userpages'   
+    this.base == 'userpages'
    )
    {
     this.nav = false;
-   } 
+   }
   else {
     this.nav = true;
   }
-  
+
 }
 public toggleSidebar(): void {
   this.sidebarService.openSidebar();
@@ -63,6 +67,11 @@ ngOnInit(): void {
   window.addEventListener('scroll', () => {
     this.scrollPosition = window.scrollY;
   });
+}
+
+openAddEditEmpForm() {
+  const dialogRef = this._dialog.open(IngredientsComponent);
+
 }
 
 }

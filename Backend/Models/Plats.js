@@ -17,9 +17,12 @@ var platSchema = new Schema(
             required: true
         },
         withIngredients: [
-            { type: Schema.Types.ObjectId, 
-              ref: 'Ingredients' }
-        ],
+            {
+              type: Schema.Types.ObjectId,
+              ref: 'Ingredients'
+            }
+          ],
+          
         specialite: { 
             type: Schema.Types.ObjectId,
             ref: 'Specialite' 
@@ -31,13 +34,15 @@ var platSchema = new Schema(
         recette:  [
             { type: Schema.Types.ObjectId, 
               ref: 'Recettes' }
-        ]
+        ],
+        images: {
+            type: String,
+          },
 
     },
     {
         timestamps: true
     }
 );
-
 
 export default model('Plats', platSchema);

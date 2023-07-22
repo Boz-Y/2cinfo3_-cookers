@@ -1,7 +1,7 @@
 import express from 'express';
 import { body } from "express-validator";
-// import multer from "../middlewares/multer-config.js";
-import { addOnceIngredients, getAll, DeleteIngredients, getIngredientsById, putOnce } from '../controllers/Ingredients.js';
+import multer from "../Middelware/multerConfig.js";
+import { addOnceIngredients, getAll, DeleteIngredients, getIngredientsById, putOnce } from '../Controllers/Ingredients.js';
 
 
 const router = express.Router();
@@ -12,15 +12,14 @@ router.route('/')
 
 router.route('/AddIngredients')
 .post(
+    multer("ingImg"),
     addOnceIngredients);
 
 router.route('/:id')
 .get(getIngredientsById)
 .delete(DeleteIngredients)
 .put(
-    body("name").isLength({ min: 5 }),
-    body("quantite").isInt(),
-    body("description").isLength({ min: 4 }),
+    multer("ingImg"),
     putOnce)
 
 

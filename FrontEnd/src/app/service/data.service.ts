@@ -17,13 +17,13 @@ export class DataService {
       route: '/home',
     },
     {
-      tittle: 'Listings',
+      tittle: 'Liste des plats',
       base: 'listings',
       showAsTab: false,
       separateRoute: false,
       menu: [
         {
-          menuValue: 'Listing Grid',
+          menuValue: 'Liste des plats',
           route: '/listings/listing-grid',
           hasSubRoute: false,
           showSubRoute: false,
@@ -32,7 +32,7 @@ export class DataService {
           last: '',
           subMenus: [],
         },
-        
+
       ],
     },
     {
@@ -301,7 +301,7 @@ export class DataService {
       img: 'assets/img/icons/category-1.svg',
      }
 ]
- 
+
   public featuredadsList = [
     {
       img1: 'assets/img/featured/feature-9.jpg',
@@ -1862,7 +1862,7 @@ export class DataService {
       rating: ' 4.9',
       review: '(2,612 Reviews)',
     },
-   
+
   ];
   public tripdata = [
     {
@@ -2442,10 +2442,10 @@ export class DataService {
       oldamount: '$450',
       rating: '4.7',
       rating1: '(50)',
-    },   
+    },
   ]
 
- 
+
   public reviewdata=[
     {
       reviewType:"Visitor Review",
@@ -2476,7 +2476,7 @@ export class DataService {
       gallery4:"assets/img/gallery/review-2.jpg",
       gallery5:"assets/img/gallery/review-3.jpg",
       gallery6:"assets/img/gallery/review-4.jpg",
-     
+
     },
     {
       reviewType:"Your Review",
@@ -2507,7 +2507,7 @@ export class DataService {
       gallery4:"assets/img/gallery/review-2.jpg",
       gallery5:"assets/img/gallery/review-3.jpg",
       gallery6:"assets/img/gallery/review-4.jpg",
-      
+
     }
   ]
   public dashboardreview=[
@@ -2526,7 +2526,7 @@ export class DataService {
       feedback:"Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     }
 
-    
+
   ]
   public accountcreation=[
     {
@@ -2545,7 +2545,7 @@ export class DataService {
       details:"Morbi nisi justo, venenatis ac nibh at, bibendum mattis risus. Maecenas tincidunt, ligula sed congue tempus, magna augue cursus ipsum, in malesuada justo risus nec lorem. Nam augue augue, mollis nec condimentum euismod, lacinia ultricies leo."
     }
   ]
-  
+
   public lovedata=[
     {
       img :"assets/img/celebrate.jpg",
@@ -2730,7 +2730,7 @@ export class DataService {
       img6:"assets/img/gallery/gallery-06.jpg",
       overlay11:"Wedding Venues",
       overlay12:"155 Photos and 5 Videos",
-     
+
     },
     {
       img:"assets/img/gallery/gallery-02.jpg",
@@ -2751,7 +2751,7 @@ export class DataService {
       img6:"assets/img/gallery/gallery-06.jpg",
       overlay11:"Wedding Venues",
       overlay12:"155 Photos and 5 Videos",
-      
+
     }
   ]
   public trendingplace=[
@@ -2815,8 +2815,8 @@ export class DataService {
       rating:"4.7",
       rating1:"(50)"
     },
-    
-   
+
+
   ]
   public businessslider=[
     {
@@ -2931,7 +2931,7 @@ export class DataService {
       name:"Suv",
       stock:"30 Cars Available",
       img:"./assets/img/cars-class-1.png",
-     
+
     },
     {
       name:"Sports",
@@ -2962,7 +2962,7 @@ export class DataService {
       name:"Suv",
       stock:"30 Cars Available",
       img:"./assets/img/cars-class-1.png",
-     
+
     },
     {
       name:"Sports",
@@ -2980,7 +2980,7 @@ export class DataService {
       name:"Audi",
       stock:"(30)",
       img:"./assets/img/partners/brand-1.png",
-     
+
     },
     {
       name:"KIA",
@@ -3012,7 +3012,7 @@ export class DataService {
       stock:"(30)",
       img:"./assets/img/partners/brand-1.png",
     }
-   
+
   ]
   public Topbrand=[
     {
@@ -3211,49 +3211,49 @@ export class DataService {
       name:"Alfred",
       position:"Graphic Designer",
       para:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eu aliquam consequat  morbi leo. Pharetra lacus vitae nisl porttitor duis. In et velit turpis nislvulputate in nunc, habitant eget. Dui",
-      
+
     },
     {
       img:"assets/img/profiles/avatar-04.jpg",
       name:"Kirsten",
       position:"Marketing Manager",
       para:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eu aliquam consequat  morbi leo. Pharetra lacus vitae nisl porttitor duis. In et velit turpis nislvulputate in nunc, habitant eget. Dui",
-     
+
     },
     {
       img:"assets/img/profiles/avatar-01.jpg",
       name:"Mike Torello",
       head:"Mexico",
       para:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eu aliquam consequat  morbi leo. Pharetra lacus vitae nisl porttitor duis. In et velit turpis nislvulputate in nunc, habitant eget. Dui",
-    
+
     },
     {
       img:"assets/img/profiles/avatar-04.jpg",
       name:"Kirsten",
       position:"Marketing Manager",
       para:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eu aliquam consequat  morbi leo. Pharetra lacus vitae nisl porttitor duis. In et velit turpis nislvulputate in nunc, habitant eget. Dui",
-    
+
     },
     {
       img:"assets/img/profiles/avatar-03.jpg",
       name:"Alfred",
       position:"Graphic Designer",
       para:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eu aliquam consequat  morbi leo. Pharetra lacus vitae nisl porttitor duis. In et velit turpis nislvulputate in nunc, habitant eget. Dui",
-    
+
     },
     {
       img:"assets/img/profiles/avatar-04.jpg",
       name:"Kirsten",
       position:"Marketing Manager",
       para:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eu aliquam consequat  morbi leo. Pharetra lacus vitae nisl porttitor duis. In et velit turpis nislvulputate in nunc, habitant eget. Dui",
-    
+
     },
     {
       img:"assets/img/profiles/avatar-01.jpg",
       name:"Mike Torello",
       position:"Mexico",
       para:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eu aliquam consequat  morbi leo. Pharetra lacus vitae nisl porttitor duis. In et velit turpis nislvulputate in nunc, habitant eget. Dui",
-    
+
     },
     {
       img:"assets/img/profiles/avatar-04.jpg",
@@ -3266,7 +3266,7 @@ export class DataService {
       name:"Alfred",
       position:"Graphic Designer",
       para:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eu aliquam consequat  morbi leo. Pharetra lacus vitae nisl porttitor duis. In et velit turpis nislvulputate in nunc, habitant eget. Dui",
-    
+
     },
   ]
   public listing=[
@@ -3656,9 +3656,6 @@ export class DataService {
       para:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.",
     }
   ]
- 
-  
- 
 
 
 
@@ -3667,15 +3664,18 @@ export class DataService {
 
 
 
-    
-  
-  
-  
-
-  
 
 
 
-    
-  
+
+
+
+
+
+
+
+
+
+
+
 }

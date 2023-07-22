@@ -7,7 +7,9 @@ export  function addOnceSpeciality (req, res){
             Specialite.create({
             name: req.body.name,
             description: req.body.description,
-            plats: req.body.plats,
+            // plats: req.body.plats,
+            specImg: `${req.file.filename}`
+
 
           })
             .then((newSpeciality) => {
@@ -15,7 +17,7 @@ export  function addOnceSpeciality (req, res){
               res.status(200).json({
                 name: newSpeciality.name,
                 description: newSpeciality.description,  
-                plats: newSpeciality.plats,
+                // plats: newSpeciality.plats,
 
               });
             })
@@ -62,14 +64,18 @@ export function putOnce(req, res) {
       newSpeciality = {
         name: req.body.name,
         description: req.body.description,
-        plats: req.body.plats,
+        // plats: req.body.plats,
+        specImg: `${req.file.filename}`
+
       }
     }
     else {
       newSpeciality = {
         name: req.body.name,
         description: req.body.description,
-        plats: req.body.plats,
+        // plats: req.body.plats,
+        specImg: `${req.file.filename}`
+
       }
     }
   Specialite.findByIdAndUpdate(req.params.id, newSpeciality)
@@ -86,5 +92,7 @@ export function putOnce(req, res) {
             res.status(500).json({ error: err });
           });
       }
+
+
 
 

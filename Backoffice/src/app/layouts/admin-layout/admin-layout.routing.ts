@@ -8,6 +8,7 @@ import { EvenementAddComponent } from '../../evenement/evenement-add/evenement-a
 import { EvenementUpdateComponent } from 'app/evenement/evenement-update/evenement-update.component';
 import { RegisterComponent } from 'app/register/register.component';
 import { UsersComponent } from 'app/users/users.component';
+import { PlatListComponent } from 'app/plat-list/plat-list.component';
 
 export const AdminLayoutRoutes: Routes = [
    
@@ -19,5 +20,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'Users',      component: UsersComponent},
     { path: 'evenement',      component: EvenementComponent},
     { path: 'evenement-add',      component: EvenementAddComponent},
-    { path: 'evenement-update', component: EvenementUpdateComponent}
+    { path: 'evenement-update', component: EvenementUpdateComponent},
+    { path: 'plat', component: PlatListComponent},
+
 ];

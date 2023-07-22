@@ -21,7 +21,6 @@ import SpecialitesRoutes from './routes/Specialite.js';
 import EventRoutes from './routes/evenement_route.js';
 import ParticipantRoutes from './routes/participant_route.js';
 import VoteRoutes from './routes/vote_route.js';
-import BesoinsRoutes from './routes/BesoinPlatsIngredients.js'; 
 import ReducUserRoutes from './routes/reducUser_route.js';
 import CommandeRoutes from './routes/Commande.js';
 
@@ -65,7 +64,6 @@ mongoose
   app.use('/event', EventRoutes);
   app.use('/event/participant', ParticipantRoutes);
   app.use('/event/vote', VoteRoutes);
-  app.use('/besoins', BesoinsRoutes);
   app.use('/reducUser',ReducUserRoutes);
   app.use('/user', UsersRoutes);
   app.use('/role', RoleRoutes);

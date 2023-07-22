@@ -1,6 +1,8 @@
 import express from 'express';
 import { body } from "express-validator";
-import { addOncePlat, getAll, DeletePlat, getPlatById, putOnce, getPlatsBySpeciality } from '../controllers/Plats.js';
+import multer from "../Middelware/multerConfig.js";
+
+import { addOncePlat, getAll, DeletePlat, getPlatById, putOnce, getPlatsBySpeciality } from '../Controllers/Plats.js';
 
 
 const router = express.Router();
@@ -11,6 +13,7 @@ router.route('/')
 
 router.route('/AddPlats')
 .post(
+    multer("images"),
     addOncePlat);
 
 
@@ -18,8 +21,7 @@ router.route('/:id')
 .get(getPlatById)
 .delete(DeletePlat)
 .put(
-    body("name").isLength({ min: 5 }),
-    body("description").isLength({ min: 4 }),
+    multer("images"),
     putOnce)
 
 router.route('/speicalite/:specialityId')

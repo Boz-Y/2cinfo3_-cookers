@@ -1,0 +1,77 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="col-md-4">
+            <button mat-raised-button class="btn btn-success btn-block"   >Ajouter un plat</button>
+        </div>
+        <div class="row">
+           
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Nos plat</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Image
+                                    </th>
+                                    <th>
+                                        Nom
+                                    </th>
+                                    <th>
+                                        Description
+                                    </th>
+                                    <th>
+                                        Temps de préparation
+                                    </th>
+                                    <th>
+                                        Ingredients
+                                    </th>
+                                    <th>
+                                        Spécialité
+                                    </th>
+
+                                </thead>
+                                <tbody>
+                                
+                                    <tr *ngFor="let plat of plats">
+                                        <td>
+                                            <img [src]="getPlatImageUrl(plat.images)" width="120" height="120">
+                                        </td>
+                                        <td>
+                                            {{plat.name}}
+                                        </td>
+                                        <td>
+                                            {{plat.desciption}}
+                                        </td>
+                                        <td>
+                                            {{plat.timeOfCook}}
+                                        </td>
+                                        <td>
+                                            {{ plat.withIngredients }}
+                                        </td>
+                                        <td>
+                                            {{ plat.specialite }}
+                                        </td>
+                                        <td>
+                                            <!-- <button mat-raised-button (click)="onDelete()"> -->
+                                                <i class="material-icons" (click)="onDelete()">delete</i>
+                                              <!-- </button> -->
+                                        </td>
+                                        <td>
+                                            <i class="material-icons" [routerLink]="['/evenement-update', data]">edit</i>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+  </div>
