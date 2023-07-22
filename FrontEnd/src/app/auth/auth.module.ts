@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     CommonModule,

@@ -2,21 +2,21 @@ import jwt from "jsonwebtoken";
 import  User  from "../Models/user.js";
 import  Role  from "../Models/Role.js";
 
-const verifyToken = (req, res, next) => {
-  let token = req.session.token;
+// const verifyToken = (req, res, next) => {
+//   let token = req.session.token;
 
-  if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
-  }
+//   if (!token) {
+//     return res.status(403).send({ message: "No token provided!" });
+//   }
 
-  jwt.verify(token, process.env.jwt_Secret, (err, decoded) => {
-    if (err) {
-      return res.status(401).send({ message: "Unauthorized!" });
-    }
-    req.userId = decoded.id;
-    next();
-  });
-};
+//   jwt.verify(token, process.env.jwt_Secret, (err, decoded) => {
+//     if (err) {
+//       return res.status(401).send({ message: "Unauthorized!" });
+//     }
+//     req.userId = decoded.id;
+//     next();
+//   });
+// };
 
 const isAdmin = async (req, res, next) => {
   try {
@@ -51,7 +51,6 @@ const isUser = async (req, res, next) => {
 };
 
 export {
-  verifyToken,
   isAdmin,
   isUser,
 };

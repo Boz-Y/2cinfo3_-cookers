@@ -37,8 +37,15 @@ const signup = async (req, res) => {
     // Sauvegarder l'utilisateur dans la base de données
     await user.save();
 
-    // Vérifier les rôles
     const roles = await Role.find({ name: { $in: req.body.roles } });
+
+    // Si aucun rôle n'est spécifié dans req.body.roles, ajoutez le rôle "user" par défaut.
+  if (roles.length === 0) {
+    const defaultRole = await Role.findOne({ name: 'user' });
+    if (defaultRole) {
+      roles.push(defaultRole);
+    }
+  }
 
     // Assigner les rôles à l'utilisateur
     user.roles = roles.map(role => role._id);
@@ -64,7 +71,7 @@ const signup = async (req, res) => {
         <p>Username: ${username}</p>
         <p>Email: ${email}</p>
         <p>Please confirm the user registration by clicking on the following link:</p>
-        <p>http://localhost:9090/api/confirm-user/${user._id}</p>
+        <p>http://localhost:9090/user/confirm-user/${user._id}</p>
       `,
     };
 
@@ -83,7 +90,7 @@ const signin = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ username }).populate("role", "-__v");
+    const user = await User.findOne({ username }).populate("roles", "-__v");
 
     if (!user) {
       return res.status(404).send({ message: "User Not found." });

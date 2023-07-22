@@ -78,10 +78,10 @@ mongoose
     console.log(req.body);
     res.redirect('http://localhost:4200/userpages/dashboard')
     });
-    app.post('/user/reset', (req,res) => {
-      console.log(req.body);
-      res.redirect('http://localhost:4200/auth/forgot-password')
-      });
+  app.post('/user/confirm-user/:userId', (req,res) => {
+   console.log(req.body);
+   res.redirect('http://localhost:4200/auth/login')
+  });
 
   app.use(notFoundError);
   app.use(errorHandler);

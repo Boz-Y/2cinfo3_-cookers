@@ -4,9 +4,8 @@ import { routes } from 'src/app/core/helpers/routes/routes';
 import { AuthService } from '../../service/auth.service';
 import { AuthInterceptor } from '../../helpers/auth.interceptor';
 import { TokenStorageService } from '../../service/token-storage.service';
-import {ToastrService} from "ngx-toastr";
-import {NgxSpinnerService} from "ngx-spinner";
 import { FormControl,FormGroup,Validators,FormBuilder } from '@angular/forms';
+declare const gapi: any; // Declare the `gapi` object 
 
 @Component({
   selector: 'app-login',
@@ -21,8 +20,11 @@ export class LoginComponent  {
   public Toggledata = false;
   username: any;
   password: any;
+  
 
-  constructor(private authService: AuthService,private formBuilder: FormBuilder,private authInterceptor: AuthInterceptor, private tokenStorage: TokenStorageService,private router:Router,private toastr: ToastrService,private spinner:NgxSpinnerService) { }
+  constructor(private authService: AuthService,private formBuilder: FormBuilder,private authInterceptor: AuthInterceptor, private tokenStorage: TokenStorageService,private router:Router) {
+ 
+   }
   get f() { return this.registerForm.controls; }
   ngOnInit() {
     //Add User form validations
@@ -30,6 +32,8 @@ export class LoginComponent  {
       username: ['', [Validators.required, Validators.pattern(this.usernamePattern)]],
       password: ['', [Validators.required]]
     });
+
+    this.loadGoogleSignInClient();
   }
 
   path(){
@@ -40,7 +44,7 @@ export class LoginComponent  {
    
   
   }
-  
+ 
   onSubmit() {
     this.submitted = true;
   // stop here if form is invalid
@@ -54,12 +58,12 @@ export class LoginComponent  {
     this.authService.signin(this.username, this.password).subscribe(
       (user) => {
         // Connexion réussie : sauvegardez le token dans le localStorage ou utilisez une solution de gestion de l'état (ex: Redux)
-        this.tokenStorage.saveToken(user.token);
-        this.tokenStorage.saveUser(user);
-        this.tokenStorage.saveLogin(user.username);
-        this.router.navigate([routes.dashboard])
-        // Redirigez l'utilisateur vers la page appropriée après la connexion réussie.
-        // Exemple : window.location.href = '/dashboard';
+        this.authInterceptor.saveToken(user.token);
+        this.authInterceptor.saveUser(user);
+        this.authInterceptor.saveLogin(user.username);
+        this.authInterceptor.saveID(user.id);
+        alert("Login Successfully");
+        this.router.navigate([routes.profile])
       },
       (error) => {
         console.error(error);
@@ -77,5 +81,36 @@ export class LoginComponent  {
       }
     );
   }
-   
+
+  loadGoogleSignInClient(): void {
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      // The Google Sign-In client script has been loaded
+      this.initializeGoogleSignIn();
+    };
+  }
+
+  initializeGoogleSignIn(): void {
+    // Initialize the Google Sign-In client
+    gapi.load('auth2', () => {
+      gapi.auth2.init({
+        client_id: '781943891006-ctdghgsrl5rq7g8eumkrcrjfnoq8pq0t.apps.googleusercontent.com'
+      }).then(() => {
+        console.log('Google Sign-In client initialized.');
+        // You can now use the Google Sign-In client methods
+      }).catch((error: any) => {
+        console.error('Error initializing Google Sign-In client:', error);
+      });
+    });
+  }
+
+  // auth2 is initialized with gapi.auth2.init() and a user is signed in.
+
+
+
   }

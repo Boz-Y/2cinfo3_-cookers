@@ -13,9 +13,9 @@ import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
   imports: [
     CommonModule,
     ProfileRoutingModule,
+    FormsModule, // Assurez-vous que FormsModule est importé ici
+    ReactiveFormsModule,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule
   ],
   providers: [
     UserService,

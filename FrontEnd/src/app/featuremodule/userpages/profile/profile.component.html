@@ -52,9 +52,8 @@
                     </a>
                 </li>
                 <li>
-                    <a [routerLink]="routes.login">
-                        <i class="fas fa-light fa-circle-arrow-left"></i> <span>Logout</span>
-                    </a>
+                    
+            <button class="btn btn-primary login-btn" (click)="signout()" type="submit">Logout</button>
                 </li>
             </ul>											
         </div>
@@ -66,44 +65,36 @@
                             <h4>Profile Details</h4>																
                         </div>
                         <div class="card-body">
-                            <div class="profile-photo">
-                                <div class="profile-img">
-                                    <div class="settings-upload-img">
-                                         <img src="assets/img/profile-img.jpg" alt="profile">
-                                    </div>										    
-                                     <div class="settings-upload-btn">											    
-                                        <input type="file" accept="image/*" name="image" class="hide-input image-upload" id="file">
-                                        <label for="file" class="file-upload">Upload New photo</label>												
-                                     </div>	
-                                     <span>Max file size: 10 MB</span>
-                                </div>                                        									
-                                <a href="javascript:void(0)" class="profile-img-del"><i class="feather-trash-2"></i></a>										
-                            </div>
+                            
                             <div class="profile-form">
-                                 <form>
+                                 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                                     <div class="form-group">
                                         <label class="col-form-label">Username</label>
                                         <div class="pass-group group-img">
                                             <span class="lock-icon"><i class="feather-user"></i></span>
-                                            <input type="text" class="form-control" value="John Doe">													
+                                            <input type="text" class="form-control" id="username"formControlName="username" class="form-control" [value]="user.username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"  id="inputusername4">	
+                                            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                                <div *ngIf="f.username.errors.required">username is required</div>
+                                                <div *ngIf="f.username.errors.username">username must be a valid username</div>												
                                         </div>
                                     </div> 
+                                    </div>
                                     <div class="row">
                                          <div class="col-lg-6 col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Addresse Email</label>
                                                 <div class="group-img">
                                                     <i class="feather-mail"></i>
-                                                    <input type="text" class="form-control" value="johndoe@email.com">
+                                                    <input type="email" class="form-control" id="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"  id="inputemail4" [value]="user.email">
+                                                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.email.errors.required">Email is required</div>
+                                                        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                                      </div>
                                                 </div>
                                             </div>
                                          </div>											
                                     </div>	
-                                    <div *ngIf="user">
-                                        <h2>Username : {{ user.username }}</h2>
-                                        <p>Email: {{ user.email }}</p>
-                                      </div>
-                                      
+                                    <button class="btn btn-primary w-100 login-btn" type="submit">Update Profile</button>
                                       <div *ngIf="!user">
                                         <p>Chargement en cours...</p>
                                       </div>									 
@@ -112,6 +103,8 @@
                         </div>								
                     </div>	
                 </div>
+                <!-- app/components/profile/profile.component.html -->
+  
                 <div class="col-lg-3">
                     <div class="profile-sidebar">
                         <div class="card">

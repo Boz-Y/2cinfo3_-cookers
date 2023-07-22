@@ -2,6 +2,9 @@ import User  from "../Models/user.js";
 import Role  from "../Models/Role.js";
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+
 
 
 
@@ -52,79 +55,84 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-const forgotPassword = async (req, res) => {
-  const { email } = req.body;
-
+const forgotPassword = async(req, res) => {
   try {
-    const user = await User.findOne({ email });
+      const { email } = req.body;
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+      const user = await User.findOne({ email });
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      console.log(user.username)
+      const resetToken = generateResetToken(); // Générer un token de réinitialisation temporaire côté serveur
+      user.resetPasswordToken = resetToken;
+      user.resetPasswordExpires = Date.now() + 3600000; // Définir une expiration d'une heure
+      const resetPasswordLink = `http://localhost:4200/auth/reset-password`;
 
-    const resetToken = crypto.randomBytes(20).toString('hex');
+      await user.save();
+      const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+              user: 'Bozyacine1@gmail.com',
+              pass: process.env.pass,
+          },
+      });
+      const mailOptions = {
+          from: 'Bozyacine1@gmail.com',
+          to: email,
+          subject: 'Réinitialisation de mot de passe',
+          html: `
+          <p>Bonjour,</p>
+          <p>Vous avez demandé la réinitialisation de votre mot de passe.</p>
+          <p>Veuillez cliquer sur le lien suivant pour réinitialiser votre mot de passe :</p>
+          <a href="${resetPasswordLink}">${resetPasswordLink}</a>
+          <p>Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet e-mail.</p>
+        `,
+      };
 
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 3600000;
-
-    await user.save();
- // Envoyer l'e-mail de confirmation à l'administrateur
- const transporter = nodemailer.createTransport({
-  // Configuration du service d'envoi d'e-mails (par exemple, Gmail)
-  service: 'gmail',
-  auth: {
-    user: 'Bozyacine1@gmail.com',
-    pass: process.env.pass,
-  },
-});
-
-const mailOptions = {
-  from: 'Bozyacine1@gmail.com',
-  to: email,
-  subject: 'Reset Password',
-  html: `
-    <p>Hello,</p>
-    <p>You are receiving this email because you (or someone else) has requested the reset of the password for your account.</p>
-    <p>Please click on the following link, or paste it into your browser to complete the process:</p>
-    <p>http://localhost:9090/api/reset-password/${resetToken}</p>
-    <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
-  `
-};
-
-const info = await transporter.sendMail(mailOptions);
-console.log('Email sent: ' + info.response);
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              console.log(error);
+              return res.status(500).json({ message: 'Error sending email' });
+          }
+          console.log('Email sent: ' + info.response);
+          res.json({ message: 'User registration successful. Confirmation email sent to admin.' });
+      });
+      res.json({ resetToken }); // Renvoyer le token de réinitialisation temporaire au client
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Error resetting password' });
+      console.log(error);
+      res.status(500).json({ message: 'Error resetting password' });
   }
 };
 
 const resetPassword = async (req, res) => {
-  const { token, newPassword } = req.body;
-
   try {
+    const { resetToken, newPassword } = req.body;
     const user = await User.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() }
+      resetPasswordToken: resetToken,
+      resetPasswordExpires: { $gt: Date.now() },
     });
 
     if (!user) {
-      return res.status(400).json({ message: 'Token invalid or expired' });
+      return res.status(400).json({ message: 'Invalid or expired reset token' });
     }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    user.password = hashedPassword;
+    console.log("=>",user.username)
+    console.log(newPassword);
+    user.password = bcrypt.hashSync(newPassword, 8);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
-
     await user.save();
 
-    res.json({ message: 'Password reset successfully' });
+    res.json({ message: 'Password reset successful' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error resetting password' });
   }
+};
+
+function generateResetToken() {
+  const resetToken = jwt.sign({ data: 'resetToken' }, 'projetPI-secret-key', { expiresIn: '1h' });
+  return resetToken;
 };
 
 const createUserFromGoogle = async (req, res) => {
@@ -195,25 +203,32 @@ const confirmUserByLink = async (req, res) => {
     user.statusUser = 'confirmé';
 
     await user.save();
-
-    const mailOptions = {
-      from: 'Bozyacine1@gmail.com',
-      to: user.email,
-      subject: 'Account Confirmation',
-      html: `
-        <p>Hello ${user.username},</p>
-        <p>Your account has been confirmed successfully.</p>
-        <p>Thank you for registering.</p>
-      `,
-    };
+    const transporter = nodemailer.createTransport({
+      // Configuration du service d'envoi d'e-mails (par exemple, Gmail)
+      service: 'gmail',
+      auth: {
+        user: 'Bozyacine1@gmail.com',
+        pass: process.env.pass,
+      },
+    });
     
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent: ' + info.response);
-    res.json({ message: 'User confirmed successfully' });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Error confirming user' });
-  }
+  const mailOptions = {
+    from: 'Bozyacine1@gmail.com',
+    to: user.email,
+    subject: 'Account Confirmation',
+    html: `
+      <p>Hello ${user.username},</p>
+      <p>Your account has been confirmed successfully.</p>
+      <p>Thank you for registering.</p>
+    `,
+  };
+  
+  const info = await transporter.sendMail(mailOptions);
+  console.log('Email sent: ' + info.response);
+} catch (error) {
+  console.log(error);
+  res.status(500).json({ message: 'Error blocking user' });
+}
 };
 
 const blockUser = async (req, res) => {

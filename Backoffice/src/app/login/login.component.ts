@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveToken(user.token);
         this.tokenStorage.saveUser(user);
         this.tokenStorage.saveLogin(user.username);
+        this.router.navigate(['Users']);
         // Redirigez l'utilisateur vers la page appropriée après la connexion réussie.
         // Exemple : window.location.href = '/dashboard';
       },
