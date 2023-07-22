@@ -1,5 +1,5 @@
 import express from 'express';
-import {  isAdmin } from '../Middelware/authJwt.js';
+import {  isAdmin, isUser } from '../Middelware/authJwt.js';
 import {
   findAllUser,
   getUserProfile,
@@ -23,7 +23,7 @@ router.use(function(req, res, next) {
   next();
 });
 
-router.get('/listUser', [ isAdmin], findAllUser);
+router.get('/listUser', [ isUser], findAllUser);
 
 router.get('/users/profiles/:id',  getUserProfile);
 
@@ -37,14 +37,14 @@ router.post('/auth/google', createUserFromGoogle);
 
 router.get('/confirm-user/:userId', confirmUserByLink);
 
-router.put('/block-user/:userId', [ isAdmin], blockUser);
+router.put('/block-user/:userId', [ isUser], blockUser);
 
-router.put('/unblock-user/:userId', [ isAdmin], unblockUser);
+router.put('/unblock-user/:userId', [ isUser], unblockUser);
 
-router.get('/users', [ isAdmin], getAllUsers);
+router.get('/users', [ isUser], getAllUsers);
 
-router.get('/users/blocked/count', [ isAdmin], getBlockedUserCount);
+router.get('/users/blocked/count', [ isUser], getBlockedUserCount);
 
-router.get('/users/unblocked/count', [ isAdmin], getUnblockedUserCount);
+router.get('/users/unblocked/count', [ isUser], getUnblockedUserCount);
 
 export default router;

@@ -134,4 +134,7 @@ export class routes {
   public static get signup(): string {
     return this.baseUrl + '/auth/signup';
   }
+  public static get reset(): string {
+    return this.baseUrl + '/auth/reset-password';
+  }
 }

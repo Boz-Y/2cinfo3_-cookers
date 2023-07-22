@@ -4,9 +4,7 @@ const { Schema, model } = mongoose;
 const RoleSchema = new Schema(
   {
     name: {
-      type: String,
-      enum: ["user", "admin"], // Allow only "user" and "admin" as role names
-      default: "user", // Set "user" as the default role value
+      type: String, // Allow only "user" and "admin" as role names
       unique: true // Ensure that each role name is unique
     }
   },
