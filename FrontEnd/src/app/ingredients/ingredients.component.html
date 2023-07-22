@@ -1,0 +1,54 @@
+<div mat-dialog-title>
+
+        <div class="row align-items-center text-center">
+            <div class="col-md-12 col-12">
+                <h2 class="breadcrumb-title">Ajouter vos Ingredients</h2>
+
+            </div>
+        </div>
+
+  <br>
+  <h4>La liste des ingredients existante :</h4>
+  <li *ngFor="let ingredient of ingredients">
+    {{ ingredient.name }}
+  </li>
+  <button class="btn btn-primary" type="submit" (click)="Suivant()">Suivant</button>
+  <br>
+  <h4>Si vous n'avez pas trouvez les ingredients de votre plat, remplissez ce formulaire : </h4>
+</div>
+<form [formGroup]="empForm">
+  <div mat-dialog-content class="content">
+    <!-- nom ingredient -->
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Nom d'ingredient</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+    </div>
+
+    <!-- description ingredient -->
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description">
+      </mat-form-field>
+    </div>
+
+    <!-- image ingredeint -->
+    <!-- <div class="form-group">
+      <h4 for="images">Image</h4>
+      <input type="file" id="ingImg" (change)="onFileSelected($event)">
+    </div> -->
+    <div class="col-lg-6 col-md-6 featured-img1">
+      <h6 class="media-title">Image</h6>
+      <div class="settings-upload-btn">
+          <input type="file" accept="image/*" id="ingImg" (change)="onFileSelected($event)" class="hide-input image-upload" >
+          <label for="file" class="file-upload">Upload File</label>
+      </div>
+    </div>
+  </div>
+</form>
+<div mat-dialog-actions class="action">
+  <button class="btn btn-outline-danger" [mat-dialog-close]="false">Cancel</button>
+  <button class="btn btn-outline-success" type="submit" (click)="onFormSubmit()">{{ data ? 'Update' : 'Save' }}</button>
+</div>

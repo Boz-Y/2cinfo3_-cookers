@@ -96,7 +96,7 @@
                           </ul>
                         </li>
                       </ng-container>
-  
+
                       <ng-container
                         *ngIf="
                         menu.menuValue == 'Home'
@@ -141,11 +141,11 @@
                   Sign In</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link header-login" [routerLink]="routes.addlisting"> <i
-                      class="fa-solid fa-plus"></i> Add Listing </a>
-          </li>
+            <a class="nav-link header-login" (click)="openAddEditEmpForm()"> <i
+                    class="fa-solid fa-plus"></i> Ajouter Plat </a>
+        </li>
       </ul>
-  
+
       </nav>
     </div>
 </header>

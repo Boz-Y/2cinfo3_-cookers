@@ -12,7 +12,12 @@ var specialiteSchema = new Schema(
             type: String,
             required: true
         },
-         plats: [{ type: Schema.Types.ObjectId, ref: 'Plats' }]
+        //  plats: [
+        //     { type: Schema.Types.ObjectId, ref: 'Plats' }
+        // ],
+        specImg: {
+            type: String,
+          },
 
     },
     {

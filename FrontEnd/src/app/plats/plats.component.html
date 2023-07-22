@@ -1,0 +1,70 @@
+<div mat-dialog-title>
+  <div class="row align-items-center text-center">
+    <div class="col-md-12 col-12">
+        <h2 class="breadcrumb-title">Ajouter votre Plat</h2>
+
+    </div>
+</div>
+  <h4>Ajouter votre plat, avec les ingrédients et la spécialité :</h4>
+</div>
+<form [formGroup]="platForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Nom du plat</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Temps de préparation</mat-label>
+        <input matInput formControlName="timeOfCook">
+      </mat-form-field>
+    </div>
+
+    <h4>Ingredients</h4>
+    <div formArrayName="withIngredients">
+      <div *ngFor="let ingredientCtrl of getIngredientsControls(); let i = index">
+        <mat-checkbox [formControl]="getIngredientControl(i)">
+          {{ ingredients[i].name }}
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <h4>Spécialité</h4>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Spécialité du plat</mat-label>
+        <mat-select formControlName="specialite">
+          <mat-option *ngFor="let specialite of specialites" [value]="specialite">{{ specialite.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- <div class="form-group">
+      <h4 for="images">Image</h4>
+      <input type="file" id="images" (change)="onFileSelected($event)">
+    </div> -->
+
+    <div class="col-lg-6 col-md-6 featured-img1">
+      <h6 class="media-title">Image</h6>
+      <div class="settings-upload-btn">
+          <input type="file" accept="image/*" id="images" (change)="onFileSelected($event)" class="hide-input image-upload" >
+          <label for="file" class="file-upload">Upload File</label>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="action">
+    <button class="btn btn-outline-danger" [mat-dialog-close]="false">Cancel</button>
+    <button class="btn btn-outline-success" type="submit" (click)="onFormSubmit()">{{ data ? 'Update' : 'Save' }}</button>
+  </div>
+</form>

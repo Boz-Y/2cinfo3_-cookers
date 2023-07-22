@@ -7,14 +7,13 @@ var ingredientsSchema = new Schema(
             type: String,
             required: true
         },
-        quantite: {
-            type: String,
-            required: true
-        },
         description: {
             type: String,
             required: true
         },
+        ingImg: {
+            type: String,
+          },
     },
     {
         timestamps: true

@@ -15,6 +15,8 @@ import {AuthService} from './service/auth.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UsersComponent } from './users/users.component';
+import { SpecialityListComponent } from './speciality-list/speciality-list.component';
+import { PlatListComponent } from './plat-list/plat-list.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -35,7 +37,8 @@ import { UsersComponent } from './users/users.component';
     EvenementAddComponent,
     EvenementUpdateComponent,
     UsersComponent,
-
+    SpecialityListComponent,
+    PlatListComponent,
   ],
   providers: [
     AuthService,

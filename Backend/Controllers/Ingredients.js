@@ -9,14 +9,16 @@ export  function addOnceIngredients (req, res){
 
             Ingredients.create({
             name: req.body.name,
-            quantite: req.body.quantite,
+            // quantite: req.body.quantite,
             description: req.body.description,
+            ingImg: `${req.file.filename}`
+
           })
             .then((newIngredients) => {
               
               res.status(200).json({
                 name: newIngredients.name,
-                quantite: newIngredients.quantite,
+                // quantite: newIngredients.quantite,
                 description: newIngredients.description,                
               });
             })
@@ -62,15 +64,19 @@ export function putOnce(req, res) {
     if(req.file == undefined) {
       newIngredients = {
         name: req.body.name,
-        quantite: req.body.quantite,
+        // quantite: req.body.quantite,
         description: req.body.description,
+        ingImg: `${req.file.filename}`
+
       }
     }
     else {
       newIngredients = {
         name: req.body.name,
-        quantite: req.body.quantite,
+        // quantite: req.body.quantite,
         description: req.body.description,
+        ingImg: `${req.file.filename}`
+
       }
     }
   Ingredients.findByIdAndUpdate(req.params.id, newIngredients)
