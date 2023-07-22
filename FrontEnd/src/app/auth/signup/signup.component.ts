@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { routes } from 'src/app/core/helpers/routes/routes';
 import {AuthService} from "../../service/auth.service";
-import {ToastrService} from "ngx-toastr";
-import {NgxSpinnerService} from "ngx-spinner";
-import { Signup } from '../../Models/signup';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthInterceptor}  from '../../helpers/auth.interceptor';
 
@@ -26,7 +23,7 @@ usernamePattern = /^[a-zA-Z0-9_-]{3,16}$/;
   password: any;
 
 
-  constructor(private formBuilder: FormBuilder,private authInterceptor: AuthInterceptor,private authService: AuthService,private toastr :ToastrService,private router :Router,private spinner :NgxSpinnerService) {}
+  constructor(private formBuilder: FormBuilder,private authInterceptor: AuthInterceptor,private authService: AuthService,private router :Router) {}
    get f() { return this.registerForm.controls; }
   
    path(){
@@ -61,6 +58,7 @@ usernamePattern = /^[a-zA-Z0-9_-]{3,16}$/;
     
       this.authService.signup(this.username, this.email, this.password).subscribe(
         (response) => {
+          alert("Votre Compte est créé avec succes, Confirmation de mail est envoyé à l'Admin");
           this.router.navigate([routes.login]);
           // Log de statut de succès
           alert("User registration successful. Confirmation email sent to admin.");

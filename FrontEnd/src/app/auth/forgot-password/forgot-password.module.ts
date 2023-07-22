@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ForgotPasswordRoutingModule } from './forgot-password-routing.module';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
-import {ToastrModule} from "ngx-toastr";
 import { HttpClientModule } from '@angular/common/http';
-import {NgxSpinnerModule} from "ngx-spinner";
 import {authInterceptorProviders} from "../../helpers/auth.interceptor";
 import {UserService} from "../../service/user.service";
 import { ToastrService} from 'ngx-toastr';
@@ -19,14 +17,11 @@ import { ToastrService} from 'ngx-toastr';
     ForgotPasswordRoutingModule,
     FormsModule, // Assurez-vous que FormsModule est importé ici
     ReactiveFormsModule,
-    ToastrModule.forRoot(),
     HttpClientModule,
-    NgxSpinnerModule
   ],
   providers: [
     authInterceptorProviders,
-    UserService,
-    ToastrService
+    UserService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

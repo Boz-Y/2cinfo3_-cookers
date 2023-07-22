@@ -9,9 +9,6 @@ import { catchError } from 'rxjs/operators';
 const API_URL = 'http://127.0.0.1:9090/user';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 // @ts-ignore
 @Injectable({
@@ -28,19 +25,30 @@ export class UserService {
     return this.http.post<User>(API_URL+'/forgotPassword', credentials);
   }
   
-  getUserProfile(userId: string): Observable<User> {
-    const token = localStorage.getItem('access_token'); // Retrieve the token from localStorage
+  getUserProfile(id: string): Observable<User> {
+    const token = localStorage.getItem("token");
     if (!token) {
       throw new Error('No token provided!'); // Handle the case where the token is missing or invalid
     }
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `${this.apiUrl}/users/profiles/${userId}`;
+    const url = `${this.apiUrl}/users/profiles/${id}`;
 
     return this.http.get<User>(url, { headers });
   }
 
-  
+  updateUserProfile(id: string, userData: { username: string, email: string }): Observable<User> {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error('No token provided!'); // Gérer le cas où le token est manquant ou invalide
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `${this.apiUrl}/users/profile/${id}`;
+
+    return this.http.put<User>(url, userData, { headers });
+  }
+
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(API_URL+'/all')
       .pipe(
@@ -62,12 +70,7 @@ export class UserService {
       )
   }
 
-  updateUser(id:any, user:any): Observable<User> {
-    return this.httpClient.put<User>(API_URL+'/UpdateUser/'+ id, user)
-      .pipe(
-        catchError(this.errorHandler)
-      )
-  }
+  
 
   errorHandler(error:any) {
     let errorMessage = '';

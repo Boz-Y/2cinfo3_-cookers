@@ -6,13 +6,12 @@ import { TableListComponent } from '../../table-list/table-list.component';
 import { EvenementComponent } from '../../evenement/evenement.component';
 import { EvenementAddComponent } from '../../evenement/evenement-add/evenement-add.component';
 import { EvenementUpdateComponent } from 'app/evenement/evenement-update/evenement-update.component';
-import { LoginComponent } from 'app/login/login.component';
 import { RegisterComponent } from 'app/register/register.component';
 import { UsersComponent } from 'app/users/users.component';
 
 export const AdminLayoutRoutes: Routes = [
    
-    { path: 'login',      component: LoginComponent },
+    
     { path: 'register',      component: RegisterComponent },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },

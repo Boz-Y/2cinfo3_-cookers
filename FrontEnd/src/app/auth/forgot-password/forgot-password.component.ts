@@ -3,11 +3,6 @@ import { Router } from '@angular/router';
 import { routes } from 'src/app/core/helpers/routes/routes';
 import { UserService } from '../../service/user.service';
 
-// import { TokenStorageService } from '../../service/token-storage.service';
-// import {ToastrService} from "ngx-toastr";
-// import {NgxSpinnerService} from "ngx-spinner";
-
-
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',

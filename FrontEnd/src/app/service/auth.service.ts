@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { User } from '../Models/user';
 import { Signup } from '../Models/signup';
 
@@ -16,7 +17,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
+
 
   signin(username: string, password: string): Observable<User> {
     const credentials = { username, password };
@@ -27,12 +30,18 @@ export class AuthService {
     const credentials = { username, email,password };
     return this.http.post<Signup>(AUTH_API+'/signup', credentials);
   }
-  
-  
 
   forget(email: string): Observable<User> {
     const credentials = { email };
     return this.http.post<User>(AUTH_API+'/forgotPassword', credentials);
+  }
+
+  signout(): Observable<User> {
+    return this.http.post<User>(AUTH_API+'/signout', null).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
   }
   
 }
