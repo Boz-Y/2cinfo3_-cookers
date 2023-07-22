@@ -6,7 +6,11 @@ import {LoginComponent} from './login/login.component'
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthGuard } from './service/auth.guard';
 const routes: Routes =[
+  
   {
+    path: '**',
+    redirectTo: 'login',
+  }, {
     path: '',
     component: LoginComponent,
   },
@@ -20,11 +24,7 @@ const routes: Routes =[
         loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
       }
     ]
-  },
-  {
-    path: '**',
-    redirectTo: 'login',
-  },
+  }
   
 ];
 
